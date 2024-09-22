@@ -2,12 +2,16 @@ import express from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import userRoutes from './routes/user.route.js';
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors())
+app.use(express.json());
+
+app.use('/api/user' ,userRoutes);   
 
 const db = mysql.createConnection({
     host: process.env.HOST,
@@ -17,7 +21,7 @@ const db = mysql.createConnection({
 }
 )
 
-app.listen(8081, ()=>{
+app.listen(3000, ()=>{
     console.log("Server is running !!");
 })
 
@@ -29,10 +33,4 @@ db.connect((err)=>{
         console.log("connected")
     }
 })
-
-app.get('/', (req, res)=>{
-    return res.json("From Backend side");
-})
-
-
 
