@@ -1,16 +1,19 @@
 import express from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
 app.use(cors())
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: 'root',
-    password: 'tiger',
-    database: 'airlinereservationsystem',
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
 }
 )
 
@@ -26,16 +29,10 @@ db.connect((err)=>{
         console.log("connected")
     }
 })
+
 app.get('/', (req, res)=>{
     return res.json("From Backend side");
 })
 
-app.get('/registration', (req, res)=>{
-    const sql = "SELECT * FROM registration";
-    db.query(sql, (err, data)=>{
-        if(err) return res.json(err);
-        return res.json(data);
-    })
-})
 
 
