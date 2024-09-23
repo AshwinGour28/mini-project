@@ -29,7 +29,7 @@ const User = sequelize.define('User', {
         },
     },
     pswd: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     f_name: {
