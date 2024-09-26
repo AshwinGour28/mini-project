@@ -76,7 +76,7 @@ export default function Register() {
               <Spinner size='sm' />
               <span className='pl-3'>Loading..</span>
               </>
-             ) : 'Regsiter'
+             ) : 'Register'
           }
         </Button>
         {errorMessage && [
