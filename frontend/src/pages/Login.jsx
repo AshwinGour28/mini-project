@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, HR, Label, Spinner, TextInput } from 'flowbite-react'
 import { useDispatch, useSelector } from 'react-redux';
 import { signInSuccess, signInStart, signInFailure } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 export default function Login() {
   const [formData, setFormData] = useState({});
@@ -70,7 +71,7 @@ export default function Login() {
 
         ]}
         <HR />
-        <Button gradientMonochrome="teal" type='submit'>Continue with Google</Button>
+        <OAuth />
       </form>
     </div>
   )

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, HR, Label, Spinner, TextInput } from 'flowbite-react'
+import OAuth from '../components/OAuth';
 
 export default function Register() {
   const [formData, setFormData] = useState({});
@@ -86,7 +87,7 @@ export default function Register() {
 
         ]}
         <HR />
-        <Button gradientMonochrome="teal">Continue with Google</Button>
+        <OAuth />
       </form>
     </div>
   )

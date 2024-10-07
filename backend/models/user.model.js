@@ -40,11 +40,15 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    profilePicture: {
+        type: DataTypes.STRING,
+        defaultValue: '/profilepic.png',
+    }
 },{
     timestamps: true,
 });
 
-sequelize.sync()
+sequelize.sync({ alter: true })
 .then(()=>{
     console.log("User table created successfully.")
 })
