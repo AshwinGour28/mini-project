@@ -43,6 +43,10 @@ const User = sequelize.define('User', {
     profilePicture: {
         type: DataTypes.STRING,
         defaultValue: '/profilepic.png',
+    },
+    isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 },{
     timestamps: true,
