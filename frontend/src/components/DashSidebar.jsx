@@ -1,5 +1,6 @@
 import { Sidebar } from 'flowbite-react'
 import {HiUser, HiArrowSmRight} from 'react-icons/hi';
+import {FaUserShield} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -57,6 +58,15 @@ export default function DashSidebar() {
                     Profile
                 </Sidebar.Item>
                 </Link>
+                {
+                  currentUser.isAdmin && (
+                    <Link to='/dashboard?tab=admin'>
+                    <Sidebar.Item active={tab === 'admin'} icon={FaUserShield}>
+                        Admin
+                    </Sidebar.Item>
+                    </Link>
+                  )
+                }
                 <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                     Sign Out
                 </Sidebar.Item>
