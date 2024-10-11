@@ -44,7 +44,7 @@ export default function Header() {
                 </Navbar.Link>
             </Navbar.Collapse>
             <div className="flex gap-2">
-                <Button gradientDuoTone="redToYellow" className="mr-5">Change Language</Button>
+                
                 {currentUser ? (
                     <Dropdown arrowIcon={false} inline label={
                         <Avatar

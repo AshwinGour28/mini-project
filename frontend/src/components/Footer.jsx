@@ -4,36 +4,46 @@ import React from 'react';
 
 export default function FooterCom() {
   return (
-    <Footer className="bg-gray-800 text-white border-t-8 border-teal-500 p-4">
-      <div className='flex gap-8 justify-center mt-4'>
-        <Footer.Icon 
-          href='#' 
-          icon={BsFacebook} 
-          className="text-2xl hover:text-teal-300 transition duration-300" 
-        />
-        <Footer.Icon 
-          href='#' 
-          icon={BsInstagram} 
-          className="text-2xl hover:text-teal-300 transition duration-300" 
-        />
-        <Footer.Icon 
-          href='#' 
-          icon={BsTwitter} 
-          className="text-2xl hover:text-teal-300 transition duration-300" 
-        />
-        <Footer.Icon 
-          href='#' 
-          icon={BsGithub} 
-          className="text-2xl hover:text-teal-300 transition duration-300" 
-        />
+    <Footer className="bg-gray-800 text-white border-t-8 border-teal-500 p-6">
+      <div className='flex flex-col items-center justify-center space-y-4'>
+        <div className='flex gap-6'>
+          <Footer.Icon 
+            href='#' 
+            icon={BsFacebook} 
+            className="text-3xl hover:text-teal-300 transition duration-300" 
+          />
+          <Footer.Icon 
+            href='#' 
+            icon={BsInstagram} 
+            className="text-3xl hover:text-teal-300 transition duration-300" 
+          />
+          <Footer.Icon 
+            href='#' 
+            icon={BsTwitter} 
+            className="text-3xl hover:text-teal-300 transition duration-300" 
+          />
+          <Footer.Icon 
+            href='#' 
+            icon={BsGithub} 
+            className="text-3xl hover:text-teal-300 transition duration-300" 
+          />
+        </div>
+        <div className='text-center mt-4'>
+          <Footer.Copyright 
+            href='#' 
+            by='Jet Set Go' 
+            year={new Date().getFullYear()} 
+            className='font-semibold text-sm'
+          />
+        </div>
       </div>
-      <div className='text-center mt-4'>
-        <Footer.Copyright 
-          href='#' 
-          by='Jet Set Go' 
-          year={new Date().getFullYear()} 
-          className='font-semibold'
-        />
+      <div className='mt-6 text-center'>
+        <p className='text-sm text-gray-400'>
+          &copy; {new Date().getFullYear()} Jet Set Go. All rights reserved.
+        </p>
+        <p className='text-sm text-gray-400'>
+          Your trusted travel partner.
+        </p>
       </div>
     </Footer>
   );

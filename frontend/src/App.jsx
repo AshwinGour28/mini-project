@@ -14,6 +14,7 @@ import OnlyAdminPrivateRoute from './pages/OnlyAdminPrivateRoute'
 import AddAdmin from './pages/AddAdmin'
 import AddFlight from './pages/AddFlight'
 import UpdateFlight from './pages/UpdateFlight'
+import DeleteFlight from './pages/DeleteFlight'
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
           <Route path='/add-admin' element={<AddAdmin />} />
           <Route path='/add-flight' element={<AddFlight />} />
           <Route path='/update-flight' element={<UpdateFlight />} />
+          <Route path='/delete-flight' element={<DeleteFlight />} />
         </Route>
       </Routes>
       <Footer />
