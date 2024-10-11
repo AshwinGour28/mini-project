@@ -37,7 +37,7 @@ export default function Home() {
       {/* Newsletter Section */}
       <h2 className="text-4xl font-semibold mt-10">Join our community of travelers!</h2>
       <p className="mt-4 text-lg">Sign up for our newsletter and receive the latest travel deals and tips directly in your inbox.</p>
-      <Link to="/signup">
+      <Link to="/login">
         <button className="mt-4 px-8 py-3 bg-green-500 rounded-lg text-white font-semibold hover:bg-green-400 transition duration-300 shadow-lg transform hover:scale-105">
           Sign Up
         </button>
