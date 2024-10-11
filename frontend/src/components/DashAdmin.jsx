@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function DashAdmin() {
   return (
-    <div>
+    <div className='flex gap-2'>
       <div>
         <Link to={'/add-admin'}>
             <Button type='button' gradientMonochrome="teal">Add Admin</Button>
