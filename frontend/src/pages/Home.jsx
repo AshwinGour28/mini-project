@@ -13,7 +13,7 @@ export default function Home() {
         <p className="text-xl mb-8 max-w-2xl mx-auto">
           Your one-stop solution for all your travel needs. Discover the best flights, hotel bookings, and exclusive travel packages tailored just for you!
         </p>
-        <Link to="/flights">
+        <Link to="/searchflights">
           <button className="px-8 py-3 bg-yellow-500 rounded-lg text-black font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg transform hover:scale-105">
             Search Flights
           </button>
