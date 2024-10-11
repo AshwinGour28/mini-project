@@ -1,83 +1,47 @@
-import React, { useState } from 'react';
-import '../styles/HomePage.css';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import travelImage from '../images/travel-image.jpeg'; // Ensure this image is high-quality and vibrant
 
 export default function Home() {
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [departure, setDeparture] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [travellers, setTravellers] = useState(1);
-  const [fareType, setFareType] = useState('Regular');
-
   return (
-    <div className="home-container">
-      <header className="header">
-        <h1>Travel Booking</h1>
-      </header>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-blue-600 text-white text-center p-5">
+      {/* Hero Section */}
+      <div className="mb-10">
+        <h1 className="text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg">
+          Welcome to <span className="text-yellow-300">Jet Set Go!</span>
+        </h1>
+        <p className="text-xl mb-8 max-w-2xl mx-auto">
+          Your one-stop solution for all your travel needs. Discover the best flights, hotel bookings, and exclusive travel packages tailored just for you!
+        </p>
+        <Link to="/searchflights">
+          <button className="px-8 py-3 bg-yellow-500 rounded-lg text-black font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg transform hover:scale-105">
+            Search Flights
+          </button>
+        </Link>
+      </div>
+      
+      {/* Travel Image */}
+      <div className="mt-10 mb-10">
+        <img src={travelImage} alt="Travel" className="w-full max-w-xl rounded-lg shadow-2xl border-4 border-yellow-500" />
+      </div>
 
-      <section className="booking-form">
-        <div className="form-row">
-          <label>From</label>
-          <input 
-            type="text" 
-            value={from} 
-            onChange={(e) => setFrom(e.target.value)} 
-            placeholder="Delhi" 
-          />
-        </div>
-        <div className="form-row">
-          <label>To</label>
-          <input 
-            type="text" 
-            value={to} 
-            onChange={(e) => setTo(e.target.value)} 
-            placeholder="Bengaluru" 
-          />
-        </div>
-        <div className="form-row">
-          <label>Departure</label>
-          <input 
-            type="date" 
-            value={departure} 
-            onChange={(e) => setDeparture(e.target.value)} 
-          />
-        </div>
-        <div className="form-row">
-          <label>Return</label>
-          <input 
-            type="date" 
-            value={returnDate} 
-            onChange={(e) => setReturnDate(e.target.value)} 
-            placeholder="Optional" 
-          />
-        </div>
-        <div className="form-row">
-          <label>Travellers & Class</label>
-          <input 
-            type="number" 
-            value={travellers} 
-            onChange={(e) => setTravellers(e.target.value)} 
-            min="1" 
-          />
-        </div>
-        <div className="fare-options">
-          <label>Select Fare:</label>
-          <div className="fare-types">
-            <button className={fareType === 'Regular' ? 'active' : ''} onClick={() => setFareType('Regular')}>
-              Regular
-            </button>
-            <button className={fareType === 'Student' ? 'active' : ''} onClick={() => setFareType('Student')}>
-              Student
-            </button>
-            <button className={fareType === 'Senior Citizen' ? 'active' : ''} onClick={() => setFareType('Senior Citizen')}>
-              Senior Citizen
-            </button>
-          </div>
-        </div>
+      {/* Why Choose Us Section */}
+      <h2 className="text-5xl font-semibold mt-10">Why Choose Us?</h2>
+      <ul className="list-disc list-inside mt-4 mb-8 text-left mx-auto max-w-2xl text-xl">
+        <li className="mt-2">✅ <span className="font-medium">Competitive Pricing</span></li>
+        <li className="mt-2">✅ <span className="font-medium">24/7 Customer Support</span></li>
+        <li className="mt-2">✅ <span className="font-medium">Easy Booking Process</span></li>
+        <li className="mt-2">✅ <span className="font-medium">Exclusive Discounts</span></li>
+      </ul>
 
-        <button className="search-button">Search</button>
-      </section>
+      {/* Newsletter Section */}
+      <h2 className="text-4xl font-semibold mt-10">Join our community of travelers!</h2>
+      <p className="mt-4 text-lg">Sign up for our newsletter and receive the latest travel deals and tips directly in your inbox.</p>
+      <Link to="/login">
+        <button className="mt-4 px-8 py-3 bg-green-500 rounded-lg text-white font-semibold hover:bg-green-400 transition duration-300 shadow-lg transform hover:scale-105">
+          Sign Up
+        </button>
+      </Link>
     </div>
   );
 }
