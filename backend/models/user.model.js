@@ -52,7 +52,7 @@ const User = sequelize.define('User', {
     timestamps: true,
 });
 
-sequelize.sync({ alter: true })
+sequelize.sync()
 .then(()=>{
     console.log("User table created successfully.")
 })
