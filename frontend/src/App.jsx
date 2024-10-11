@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import SearchFlights from './pages/SearchFlights'
 import About from './pages/About'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -22,6 +23,7 @@ export default function App() {
 
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
+        <Route path="/searchflights" element={<SearchFlights />} /> 
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/add-passenger' element={<AddPassenger />}/>

@@ -37,7 +37,7 @@ export default function Header() {
                     <Link to="/" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">Home</Link>
                 </Navbar.Link>
                 <Navbar.Link>
-                    <Link to="/#" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">Search Flights</Link>
+                <Link to="/searchflights" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">Search Flights</Link>
                 </Navbar.Link>
                 <Navbar.Link>
                     <Link to="/about" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">About</Link>
