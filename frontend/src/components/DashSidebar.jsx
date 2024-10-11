@@ -1,4 +1,4 @@
-import { Sidebar } from 'flowbite-react'
+import { Sidebar } from 'flowbite-react';
 import { HiUser, HiArrowSmRight } from 'react-icons/hi';
 import { FaUserShield } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
-import React from 'react'
+import React from 'react';
 
 export default function DashSidebar() {
-  const { currentUser } = useSelector(state => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
   const dispatch = useDispatch();
   const [tab, setTab] = useState('');
@@ -39,7 +39,7 @@ export default function DashSidebar() {
   };
 
   return (
-    <Sidebar className="w-full md:w-56 bg-white shadow-lg">
+    <Sidebar className="w-full md:w-56 bg-gray-300 shadow-lg"> {/* Changed to bg-gray-300 for a darker shade */}
       <Sidebar.Items>
         <Sidebar.ItemGroup>
 

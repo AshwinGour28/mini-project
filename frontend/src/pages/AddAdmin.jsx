@@ -45,8 +45,8 @@ export default function AddAdmin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-100 to-pink-300 p-8">
+      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md transition-transform transform hover:scale-105">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Add New Admin</h2>
         <form onSubmit={handleSubmit}>
           {/* Name */}
@@ -57,7 +57,7 @@ export default function AddAdmin() {
               name="name"
               value={adminDetails.name}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
@@ -70,7 +70,7 @@ export default function AddAdmin() {
               name="email"
               value={adminDetails.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
@@ -83,7 +83,7 @@ export default function AddAdmin() {
               name="password"
               value={adminDetails.password}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
@@ -96,7 +96,7 @@ export default function AddAdmin() {
               name="confirmPassword"
               value={adminDetails.confirmPassword}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
@@ -108,7 +108,7 @@ export default function AddAdmin() {
               name="role"
               value={adminDetails.role}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
               <option value="Standard">Standard Admin</option>
               <option value="Super Admin">Super Admin</option>
@@ -123,7 +123,7 @@ export default function AddAdmin() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 ease-in-out"
+            className="w-full bg-purple-600 text-white p-3 rounded-lg font-semibold hover:bg-purple-700 transition duration-300 ease-in-out"
           >
             Add Admin
           </button>

@@ -5,8 +5,8 @@ export default function DashProfile() {
   const { currentUser } = useSelector(state => state.user);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-50 p-8">
-      <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-lg">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-8">
+      <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-xl transition-transform transform hover:scale-105">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Profile Details</h2>
         
         <div className="space-y-6">

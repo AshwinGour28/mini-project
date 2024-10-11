@@ -15,6 +15,7 @@ export default function UpdateFlight() {
   const [price, setPrice] = useState('');
   const [flightID, setFlightID] = useState('');
   const [existingFlight, setExistingFlight] = useState(null); // For fetching flight details
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Function to simulate fetching flight data based on Flight ID
   const fetchFlightData = (flightID) => {
@@ -63,8 +64,14 @@ export default function UpdateFlight() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can add logic to submit updated data to the backend or state management
 
+    // Basic validation: Check if fields are not empty
+    if (!airline || !dateOfJourney || !source || !destination || !route || !depTime || !arrivalTime || !duration || !totalStops || !additionalInfo || !price || !flightID) {
+      setErrorMessage('All fields are required');
+      return;
+    }
+
+    // Here you can add logic to submit updated data to the backend or state management
     console.log({
       airline,
       dateOfJourney,
@@ -79,10 +86,26 @@ export default function UpdateFlight() {
       price,
       flightID,
     });
+
+    // Clear the form and error message upon successful submission
+    setErrorMessage('');
+    setAirline('');
+    setDateOfJourney('');
+    setSource('');
+    setDestination('');
+    setRoute('');
+    setDepTime('');
+    setArrivalTime('');
+    setDuration('');
+    setTotalStops('');
+    setAdditionalInfo('');
+    setPrice('');
+    setFlightID('');
+    setExistingFlight(null);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-100 to-pink-300"> {/* Example of an aesthetically pleasing gradient */}
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-2xl font-semibold text-center mb-6">Update Flight</h2>
 
@@ -232,10 +255,9 @@ export default function UpdateFlight() {
 
           {/* Price */}
           <div>
-            <label className="block text-gray-700">Price (in INR)</label>
+            <label className="block text-gray-700">Price</label>
             <input
-              type="number"
-              min="0"
+              type="text"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -244,16 +266,16 @@ export default function UpdateFlight() {
             />
           </div>
 
+          {/* Error Message */}
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
           {/* Submit Button */}
-          <div>
-            <button
-              type="submit"
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              disabled={!existingFlight}
-            >
-              Update Flight
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition duration-200"
+          >
+            Update Flight
+          </button>
         </form>
       </div>
     </div>
