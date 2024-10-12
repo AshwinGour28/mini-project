@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import '../styles/SearchFlights.css'; // Make sure to import the CSS file
 
 export default function SearchFlights() {
   const [fromCity, setFromCity] = useState('');
@@ -9,6 +10,7 @@ export default function SearchFlights() {
   const [selectedFare, setSelectedFare] = useState(null);
   const [tripType, setTripType] = useState('One-way');
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isVisible, setIsVisible] = useState(false); // For animation
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,8 +31,12 @@ export default function SearchFlights() {
     "Senior Citizen": "Senior citizens must provide a valid ID showing their age to avail the discount. This fare is only applicable for round-trip flights.",
   };
 
+  useEffect(() => {
+    setIsVisible(true); // Trigger animation on mount
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 to-blue-100 p-4">
+    <div className={`flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 to-blue-100 p-4 ${isVisible ? 'slide-in' : ''}`}>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <form onSubmit={handleSearch} className="grid grid-cols-2 gap-6">
           
@@ -187,17 +193,16 @@ export default function SearchFlights() {
           <div className="col-span-2">
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300"
             >
-              Search
+              Search 
             </button>
           </div>
         </form>
       </div>
-
-      <div className="mt-8 text-gray-700">
-        <p>Book your flight with confidence and explore amazing destinations!</p>
-      </div>
     </div>
   );
-}
+                }
+
+
+

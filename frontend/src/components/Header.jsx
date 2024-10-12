@@ -97,12 +97,32 @@ export default function Header() {
                         <Dropdown.Header>
                             <span className="block text-sm">@{currentUser.u_name}</span>
                             <span className="block text-sm font-medium truncate">@{currentUser.email}</span>
-                        </Dropdown.Header>
-                        <Link to={'/dashboard?tab=profile'}>
-                            <Dropdown.Item className={`transform transition-transform duration-500 ${visibility.userMenu ? 'translate-x-0' : '-translate-x-full'}`}>Profile</Dropdown.Item>
-                        </Link>
-                        <Dropdown.Divider />
-                        <Dropdown.Item onClick={handleSignout} className={`transform transition-transform duration-500 ${visibility.userMenu ? 'translate-x-0' : '-translate-x-full'}`}>Sign out</Dropdown.Item>
+                            </Dropdown.Header>
+
+{/* Profile Link */}
+<Link to={'/dashboard?tab=profile'}>
+    <Dropdown.Item 
+        className={`transform transition-transform duration-500 ease-in-out flex items-center space-x-3 p-3 rounded-lg 
+            ${visibility.userMenu ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} 
+            hover:bg-indigo-500 hover:text-black bg-indigo-100 text-gray-800 shadow-md`}
+    >
+        <span>Profile</span>
+    </Dropdown.Item>
+</Link>
+
+{/* Divider */}
+<Dropdown.Divider className="my-2 border-gray-300" />
+
+{/* Sign Out Link */}
+<Dropdown.Item 
+    onClick={handleSignout} 
+    className={`transform transition-transform duration-500 ease-in-out flex items-center space-x-3 p-3 rounded-lg 
+        ${visibility.userMenu ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} 
+        hover:bg-red-500 hover:text-black bg-red-100 text-gray-800 shadow-md`}
+>
+    <span>Sign Out</span>
+</Dropdown.Item>
+
                     </Dropdown>
                 ) : (
                     <Link to="/login">
