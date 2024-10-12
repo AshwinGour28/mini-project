@@ -21,12 +21,8 @@ export default function Dashboard() {
         {/* Sidebar */}
         <DashSidebar />
       </div>
-      <div>
-        {/* profile */}
+      <div className='flex-grow'>
         {tab === 'profile' && <DashProfile />}
-      </div>
-      <div>
-        {/* admin */}
         {tab === 'admin' && <DashAdmin />}
       </div>
     </div>

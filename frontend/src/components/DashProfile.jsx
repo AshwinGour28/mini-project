@@ -1,11 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { updateStart, updateFailure, updateSuccess } from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
+import { Alert } from 'flowbite-react';
 
 export default function DashProfile() {
   const { currentUser } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({});
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+  const [updateUserError, setUpdateUserError] = useState(null);
 
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.id] : e.target.value});
+  }
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(Object.keys(formData).length === 0){
+      setUpdateUserError("No changes made");
+      return;
+    }
+    try{
+      dispatch(updateStart());
+      const res = await fetch(`http://localhost:3000/api/user/update/${currentUser.reg_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
+      }else{
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
+      }
+    }catch(error){
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
+    }
+  }
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-8">
+    <form className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-8" onSubmit={handleSubmit}>
       <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-xl transition-transform transform hover:scale-105">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Profile Details</h2>
         
@@ -13,33 +53,28 @@ export default function DashProfile() {
           {/* First Name */}
           <div>
             <label className="block text-lg font-medium text-gray-700">First Name</label>
-            <div className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700">
-              {currentUser.f_name}
-            </div>
+            <input id='f_name' className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700" defaultValue={currentUser.f_name} placeholder='First name' type='text' onChange={handleChange}>
+            </input>
           </div>
 
           {/* Last Name */}
           <div>
             <label className="block text-lg font-medium text-gray-700">Last Name</label>
-            <div className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700">
-              {currentUser.l_name}
-            </div>
+            <input id='l_name' className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700" defaultValue={currentUser.l_name} placeholder='Last name' type='text' onChange={handleChange}>
+            </input>
           </div>
-
           {/* Email Address */}
           <div>
             <label className="block text-lg font-medium text-gray-700">Email Address</label>
-            <div className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700">
-              {currentUser.email}
-            </div>
+            <input id='email' className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700" placeholder='email' defaultValue={currentUser.email} type='text' onChange={handleChange}>
+            </input>
           </div>
 
           {/* Password */}
           <div>
             <label className="block text-lg font-medium text-gray-700">Password</label>
-            <div className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700">
-              {'*'.repeat(8)} {/* Displaying asterisks for the password */}
-            </div>
+            <input id='pswd' className="mt-2 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-700" placeholder='*******' type='password' onChange={handleChange}>
+            </input>
           </div>
         </div>
 
@@ -52,8 +87,21 @@ export default function DashProfile() {
             Delete
           </button>
         </div>
-
+        {
+          updateUserSuccess && (
+            <Alert color='success' className='mt-5'>
+              {updateUserSuccess}
+            </Alert>
+          )
+        }
+        {
+          updateUserError && (
+            <Alert color='failure' className='mt-5'>
+              {updateUserSuccess}
+            </Alert>
+          )
+        }
       </div>
-    </div>
+    </form>
   );
 }
