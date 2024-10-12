@@ -43,8 +43,16 @@ export default function DashProfile() {
           </div>
         </div>
 
-        {/* Profile Picture */}
-        
+        {/* Buttons for Update and Delete */}
+        <div className="mt-8 flex justify-between">
+          <button className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow hover:bg-blue-600">
+            Update
+          </button>
+          <button className="px-6 py-3 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-600">
+            Delete
+          </button>
+        </div>
+
       </div>
     </div>
   );

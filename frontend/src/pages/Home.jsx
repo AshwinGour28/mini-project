@@ -1,47 +1,70 @@
 import React from 'react';
+import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
-import travelImage from '../images/travel-image.jpeg'; // Ensure this image is high-quality and vibrant
 
-export default function Home() {
+function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-blue-600 text-white text-center p-5">
+    <div className="homepage">
       {/* Hero Section */}
-      <div className="mb-10">
-        <h1 className="text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg">
-          Welcome to <span className="text-yellow-300">Jet Set Go!</span>
-        </h1>
-        <p className="text-xl mb-8 max-w-2xl mx-auto">
-          Your one-stop solution for all your travel needs. Discover the best flights, hotel bookings, and exclusive travel packages tailored just for you!
+      <section className="hero-section">
+        <div className="hero-text">
+          <h1>BOOK YOUR AIR TICKET EASY & FAST</h1>
+          <p>Stop searching. Start traveling. The airline that's different and better.</p>
+          <div className="hero-buttons">
+            <Link to={'/searchflights'}>
+              <button className="btn-primary">Book Now</button>
+            </Link>
+            <button className="btn-secondary">Explore More</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Feature Section */}
+      <section className="features">
+        <div className="feature">
+          <h3>Fast & Easy Booking</h3>
+          <p>Search for a flight, pick the seats, complete the payment. It's that easy!</p>
+        </div>
+        <div className="feature">
+          <h3>Any Time, Anywhere</h3>
+          <p>Taking you to destinations all around the globe, every day. Where are you going?</p>
+        </div>
+        <div className="feature">
+          <h3>24/7 Support</h3>
+          <p>We're here for you around the clock. More than just flying!</p>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="about-us">
+        <h2>We Are JetSetGo Airways</h2>
+        <p>
+          JetSetGo Airways is one of the fastest-growing airlines in the world. We began flying in 2024 
+          and have grown to more than 150 destinations across the globe. We pride ourselves on 
+          offering top-notch services for an unparalleled flying experience.
         </p>
-        <Link to="/searchflights">
-          <button className="px-8 py-3 bg-yellow-500 rounded-lg text-black font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg transform hover:scale-105">
-            Search Flights
-          </button>
-        </Link>
-      </div>
-      
-      {/* Travel Image */}
-      <div className="mt-10 mb-10">
-        <img src={travelImage} alt="Travel" className="w-full max-w-xl rounded-lg shadow-2xl border-4 border-yellow-500" />
-      </div>
+        <button className="btn-primary">Discover More</button>
+      </section>
 
-      {/* Why Choose Us Section */}
-      <h2 className="text-5xl font-semibold mt-10">Why Choose Us?</h2>
-      <ul className="list-disc list-inside mt-4 mb-8 text-left mx-auto max-w-2xl text-xl">
-        <li className="mt-2">✅ <span className="font-medium">Competitive Pricing</span></li>
-        <li className="mt-2">✅ <span className="font-medium">24/7 Customer Support</span></li>
-        <li className="mt-2">✅ <span className="font-medium">Easy Booking Process</span></li>
-        <li className="mt-2">✅ <span className="font-medium">Exclusive Discounts</span></li>
-      </ul>
+      {/* Upcoming Flights Section */}
+      <section className="upcoming-flights">
+        <h2>Upcoming Flights</h2>
+        <div className="flight-cards">
+          <div className="flight-card">
+            <img src="flightsima.jpeg" alt="Flight" />
+            
+          </div>
+          {/* Additional flight cards can be dynamically added here */}
+        </div>
+      </section>
 
-      {/* Newsletter Section */}
-      <h2 className="text-4xl font-semibold mt-10">Join our community of travelers!</h2>
-      <p className="mt-4 text-lg">Sign up for our newsletter and receive the latest travel deals and tips directly in your inbox.</p>
-      <Link to="/login">
-        <button className="mt-4 px-8 py-3 bg-green-500 rounded-lg text-white font-semibold hover:bg-green-400 transition duration-300 shadow-lg transform hover:scale-105">
-          Sign Up
-        </button>
-      </Link>
+      {/* Testimonials Section */}
+      <section className="testimonials">
+        <h2>Our Happy Passengers</h2>
+        <p>Are you a registered customer? We are happy to hear your feedback. Add your review below.</p>
+      </section>
     </div>
   );
 }
+
+export default HomePage;

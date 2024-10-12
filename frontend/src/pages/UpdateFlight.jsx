@@ -202,17 +202,7 @@ export default function UpdateFlight() {
               />
             </div>
 
-            <div>
-              <label className="block text-gray-700">Duration</label>
-              <input
-                type="text"
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-                disabled={!existingFlight}
-              />
-            </div>
+        
 
             <div>
               <label className="block text-gray-700">Total Stops</label>
@@ -226,16 +216,7 @@ export default function UpdateFlight() {
               />
             </div>
 
-            <div>
-              <label className="block text-gray-700">Additional Info</label>
-              <textarea
-                value={additionalInfo}
-                onChange={(e) => setAdditionalInfo(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-                disabled={!existingFlight}
-              />
-            </div>
+          
 
             <div>
               <label className="block text-gray-700">Price</label>

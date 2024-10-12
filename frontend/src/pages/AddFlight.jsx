@@ -9,7 +9,8 @@ export default function AddFlight() {
     date: '',
     time: '',
     airline: '',
-    gate: '',
+    route: '',
+    numberOfStops: '',
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,7 +24,7 @@ export default function AddFlight() {
     e.preventDefault();
 
     // Basic validation: Check if fields are not empty
-    if (!flightDetails.flightNumber || !flightDetails.departure || !flightDetails.arrival || !flightDetails.date || !flightDetails.time || !flightDetails.airline || !flightDetails.gate) {
+    if (!flightDetails.flightNumber || !flightDetails.departure || !flightDetails.arrival || !flightDetails.date || !flightDetails.time || !flightDetails.airline || !flightDetails.route || !flightDetails.numberOfStops) {
       setErrorMessage('All fields are required');
       return;
     }
@@ -39,7 +40,8 @@ export default function AddFlight() {
       date: '',
       time: '',
       airline: '',
-      gate: '',
+      route: '',
+      numberOfStops: '',
     });
     setErrorMessage('');
   };
@@ -53,7 +55,7 @@ export default function AddFlight() {
           <form onSubmit={handleSubmit}>
             {/* Flight Number */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">Flight Number</label>
+              <label className="block text-gray-700 font-semibold mb-2">Flight ID</label>
               <input
                 type="text"
                 name="flightNumber"
@@ -129,18 +131,45 @@ export default function AddFlight() {
               />
             </div>
 
-            {/* Gate */}
+            {/* Route */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">Gate</label>
+              <label className="block text-gray-700 font-semibold mb-2">Route</label>
               <input
                 type="text"
-                name="gate"
-                value={flightDetails.gate}
+                name="route"
+                value={flightDetails.route}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
               />
             </div>
+
+            {/* Number of Stops */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-2">Number of Stops</label>
+              <input
+                type="number"
+                name="numberOfStops"
+                value={flightDetails.numberOfStops}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                required
+              />
+            </div>
+
+            {/* Price */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-2">Price</label>
+              <input
+                type="number"
+                name="numberOfStops"
+                value={flightDetails.numberOfStops}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                required
+              />
+            </div>
+            
 
             {/* Error Message */}
             {errorMessage && (
