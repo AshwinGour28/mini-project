@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,40 @@ import logo from '../images/logoo.avif'; // Correct path to the logo
 export default function Header() {
     const { currentUser } = useSelector((state) => state.user);
     const dispatch = useDispatch();
+
+    // State to control the visibility of each component
+    const [visibility, setVisibility] = useState({
+        logo: false,
+        navItems: [],
+        userMenu: false,
+        loginButton: false
+    });
+
+    useEffect(() => {
+        // Stagger the appearance of components
+        const timeoutIds = [];
+
+        // Logo animation
+        timeoutIds.push(setTimeout(() => setVisibility(prev => ({ ...prev, logo: true })), 100));
+        
+        // Navigation items animation
+        ['/', '/searchflights', '/about'].forEach((path, index) => {
+            timeoutIds.push(setTimeout(() => setVisibility(prev => {
+                const newNavItems = [...prev.navItems];
+                newNavItems[index] = true;
+                return { ...prev, navItems: newNavItems };
+            }), (index + 1) * 100));
+        });
+
+        // User menu and login button animation
+        timeoutIds.push(setTimeout(() => setVisibility(prev => ({ ...prev, userMenu: true })), 500));
+        timeoutIds.push(setTimeout(() => setVisibility(prev => ({ ...prev, loginButton: true })), 700));
+
+        // Cleanup the timeout on component unmount
+        return () => {
+            timeoutIds.forEach(clearTimeout);
+        };
+    }, []);
 
     const handleSignout = async () => {
         try {
@@ -29,22 +63,29 @@ export default function Header() {
     return (
         <Navbar className="border-b-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-4">
             <Link to="/" className="flex items-center">
-                <span className="text-3xl font-bold text-white font-poppins">Jet Set Go</span>
-                <img src={logo} alt="Logo" className="w-16 h-16 rounded-full inline-block ml-3" />
+                <span
+                    className={`text-3xl font-bold text-white font-poppins transition-transform duration-500 transform ${visibility.logo ? 'translate-x-0' : '-translate-x-full'}`}
+                >
+                    Jet Set Go
+                </span>
+                <img
+                    src={logo}
+                    alt="Logo"
+                    className={`w-16 h-16 rounded-full inline-block ml-3 transition-transform duration-500 transform ${visibility.logo ? 'translate-x-0' : '-translate-x-full'}`}
+                />
             </Link>
             <Navbar.Collapse>
-                <Navbar.Link>
-                    <Link to="/" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">Home</Link>
-                </Navbar.Link>
-                <Navbar.Link>
-                <Link to="/searchflights" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">Search Flights</Link>
-                </Navbar.Link>
-                <Navbar.Link>
-                    <Link to="/about" className="text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300">About</Link>
-                </Navbar.Link>
+                <div className="flex space-x-4">
+                    {['/', '/searchflights', '/about'].map((path, index) => (
+                        <Navbar.Link key={path}>
+                            <Link to={path} className={`text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300 transform ${visibility.navItems[index] ? 'translate-x-0' : '-translate-x-full'}`} style={{ transitionDelay: `${(index + 1) * 100}ms` }}>
+                                {path === '/' ? 'Home' : path.slice(1).charAt(0).toUpperCase() + path.slice(2)} 
+                            </Link>
+                        </Navbar.Link>
+                    ))}
+                </div>
             </Navbar.Collapse>
             <div className="flex gap-2">
-                
                 {currentUser ? (
                     <Dropdown arrowIcon={false} inline label={
                         <Avatar
@@ -58,14 +99,14 @@ export default function Header() {
                             <span className="block text-sm font-medium truncate">@{currentUser.email}</span>
                         </Dropdown.Header>
                         <Link to={'/dashboard?tab=profile'}>
-                            <Dropdown.Item>Profile</Dropdown.Item>
+                            <Dropdown.Item className={`transform transition-transform duration-500 ${visibility.userMenu ? 'translate-x-0' : '-translate-x-full'}`}>Profile</Dropdown.Item>
                         </Link>
                         <Dropdown.Divider />
-                        <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+                        <Dropdown.Item onClick={handleSignout} className={`transform transition-transform duration-500 ${visibility.userMenu ? 'translate-x-0' : '-translate-x-full'}`}>Sign out</Dropdown.Item>
                     </Dropdown>
                 ) : (
                     <Link to="/login">
-                        <Button gradientDuoTone="purpleToBlue">Login/Register</Button>
+                        <Button gradientDuoTone="purpleToBlue" className={`transform transition-transform duration-500 ${visibility.loginButton ? 'translate-x-0' : '-translate-x-full'}`}>Login/Register</Button>
                     </Link>
                 )}
             </div>

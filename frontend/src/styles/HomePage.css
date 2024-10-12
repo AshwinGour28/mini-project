@@ -1,31 +1,34 @@
 .homepage {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* Hero Section */
 .hero-section {
   text-align: center;
   background-image: url('background.jpg');
+  background-color: red;
   background-size: cover;
   background-position: center;
   color: white;
   padding: 150px 20px;
-  position: relative;
+  position: relative; /* Ensure the hero section is positioned */
 }
 
+/* Rest of your existing CSS remains unchanged */
 .hero-text h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .hero-text p {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 30px;
 }
 
 .hero-buttons button {
   margin: 10px;
-  padding: 12px 30px;
+  padding: 15px 40px;
 }
 
 .btn-primary {
@@ -33,6 +36,7 @@
   color: #333;
   border: none;
   cursor: pointer;
+  border-radius: 50px;
   transition: all 0.3s ease;
 }
 
@@ -43,13 +47,14 @@
 .btn-secondary {
   background-color: transparent;
   color: #fff;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Features Section */
@@ -57,22 +62,24 @@
   display: flex;
   justify-content: space-around;
   padding: 60px 20px;
-  background-color: #f8f9fa;
-}
-
-.feature {
+  background-color: #f0f4f8;
   text-align: center;
-  width: 30%;
 }
 
 .feature h3 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: 15px;
+  color: #333;
 }
 
 .feature p {
   color: #6c757d;
+  font-size: 1.15rem;
   line-height: 1.6;
+}
+
+.feature {
+  width: 30%;
 }
 
 /* About Us Section */
@@ -83,7 +90,7 @@
 }
 
 .about-us h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
@@ -92,27 +99,23 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.8;
+  font-size: 1.2rem;
 }
 
 /* Upcoming Flights Section */
 .upcoming-flights {
   padding: 80px 20px;
   text-align: center;
-  background-image: url('travelll.jpeg'); /* Full background image */
+  background-image: url('travelll.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: white;
-  height: 100vh; /* Full height */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
-/* .flight-cards {
-  display: none; 
-} */
- 
 
 /* Testimonials Section */
 .testimonials {
@@ -122,12 +125,13 @@
 }
 
 .testimonials h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
 .testimonials p {
   color: #6c757d;
+  font-size: 1.15rem;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -135,7 +139,12 @@
 
 /* Button Global Styles */
 button {
-  font-size: 1rem;
-  border-radius: 5px;
+  font-size: 1.1rem;
+  border-radius: 30px;
   transition: background-color 0.3s ease;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  transform: translateY(-3px);
 }
