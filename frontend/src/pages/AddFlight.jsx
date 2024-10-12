@@ -2,29 +2,19 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar'; // Import the Sidebar component
 
 export default function AddFlight() {
-  const [flightDetails, setFlightDetails] = useState({
-    flightNumber: '',
-    departure: '',
-    arrival: '',
-    date: '',
-    time: '',
-    airline: '',
-    route: '',
-    numberOfStops: '',
-  });
+  const [flightDetails, setFlightDetails] = useState({});
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFlightDetails({ ...flightDetails, [name]: value });
+    setFlightDetails({ ...flightDetails, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Basic validation: Check if fields are not empty
-    if (!flightDetails.flightNumber || !flightDetails.departure || !flightDetails.arrival || !flightDetails.date || !flightDetails.time || !flightDetails.airline || !flightDetails.route || !flightDetails.numberOfStops) {
+    if (!flightDetails.flightNumber || !flightDetails.departure || !flightDetails.arrival || !flightDetails.date || !flightDetails.time || !flightDetails.airline || !flightDetails.route || !flightDetails.numberOfStops || flightDetails.price) {
       setErrorMessage('All fields are required');
       return;
     }
@@ -38,10 +28,11 @@ export default function AddFlight() {
       departure: '',
       arrival: '',
       date: '',
-      time: '',
       airline: '',
       route: '',
       numberOfStops: '',
+      source: '',
+      destination: '',
     });
     setErrorMessage('');
   };
@@ -66,11 +57,50 @@ export default function AddFlight() {
               />
             </div>
 
+            {/* Airline */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-2">Airline</label>
+              <input
+                type="text"
+                name="airline"
+                value={flightDetails.airline}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                required
+              />
+            </div>
+
+            {/* Source */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-2">Source</label>
+              <input
+                type="text"
+                name="source"
+                value={flightDetails.source}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                required
+              />
+            </div>
+
+            {/* Destination */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-2">Destination</label>
+              <input
+                type="text"
+                name="destination"
+                value={flightDetails.destination}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                required
+              />
+            </div>
+
             {/* Departure */}
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2">Departure</label>
               <input
-                type="text"
+                type="time"
                 name="departure"
                 value={flightDetails.departure}
                 onChange={handleChange}
@@ -83,7 +113,7 @@ export default function AddFlight() {
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2">Arrival</label>
               <input
-                type="text"
+                type="time"
                 name="arrival"
                 value={flightDetails.arrival}
                 onChange={handleChange}
@@ -105,31 +135,6 @@ export default function AddFlight() {
               />
             </div>
 
-            {/* Time */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">Time</label>
-              <input
-                type="time"
-                name="time"
-                value={flightDetails.time}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-                required
-              />
-            </div>
-
-            {/* Airline */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">Airline</label>
-              <input
-                type="text"
-                name="airline"
-                value={flightDetails.airline}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-                required
-              />
-            </div>
 
             {/* Route */}
             <div className="mb-4">
