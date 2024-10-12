@@ -4,37 +4,39 @@ import Sidebar from './Sidebar'; // Import the Sidebar component
 export default function AddFlight() {
   const [flightDetails, setFlightDetails] = useState({});
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleChange = (e) => {
     setFlightDetails({ ...flightDetails, [e.target.id]: e.target.value.trim() });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic validation: Check if fields are not empty
-    if (!flightDetails.flightNumber || !flightDetails.departure || !flightDetails.arrival || !flightDetails.date || !flightDetails.time || !flightDetails.airline || !flightDetails.route || !flightDetails.numberOfStops || flightDetails.price) {
+    if (!flightDetails.flightId || !flightDetails.airline || !flightDetails.source || !flightDetails.destination || !flightDetails.dep_time || !flightDetails.arrival_time || !flightDetails.date || !flightDetails.route || !flightDetails.no_of_stops || !flightDetails.price) {
       setErrorMessage('All fields are required');
       return;
     }
 
-    // You can send the flightDetails object to the backend via an API call here
-    console.log('Flight details submitted:', flightDetails);
-
-    // Clear the form and error message upon successful submission
-    setFlightDetails({
-      flightNumber: '',
-      departure: '',
-      arrival: '',
-      date: '',
-      airline: '',
-      route: '',
-      numberOfStops: '',
-      source: '',
-      destination: '',
-    });
-    setErrorMessage('');
+    try {
+      const res = await fetch('http://localhost:3000/api/flight/add-flight', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(flightDetails),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        setErrorMessage(data.message);
+        return;
+      }
+      if(res.ok){
+        setErrorMessage(null);
+      }
+    } catch (error) {
+      setErrorMessage('Something went wrong');
+    }
   };
 
   return (
@@ -49,8 +51,8 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Flight ID</label>
               <input
                 type="text"
-                name="flightNumber"
-                value={flightDetails.flightNumber}
+                id="flightId"
+                value={flightDetails.flightId}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
@@ -62,7 +64,7 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Airline</label>
               <input
                 type="text"
-                name="airline"
+                id='airline'
                 value={flightDetails.airline}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -75,7 +77,7 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Source</label>
               <input
                 type="text"
-                name="source"
+                id='source'
                 value={flightDetails.source}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -88,7 +90,7 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Destination</label>
               <input
                 type="text"
-                name="destination"
+                id='destination'
                 value={flightDetails.destination}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -101,8 +103,8 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Departure</label>
               <input
                 type="time"
-                name="departure"
-                value={flightDetails.departure}
+                id='dep_time'
+                value={flightDetails.dep_time}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
@@ -114,8 +116,8 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Arrival</label>
               <input
                 type="time"
-                name="arrival"
-                value={flightDetails.arrival}
+                id='arrival_time'
+                value={flightDetails.arrival_time}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
@@ -127,7 +129,7 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Date</label>
               <input
                 type="date"
-                name="date"
+                id='date'
                 value={flightDetails.date}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -141,7 +143,7 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Route</label>
               <input
                 type="text"
-                name="route"
+                id='route'
                 value={flightDetails.route}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -154,8 +156,8 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Number of Stops</label>
               <input
                 type="number"
-                name="numberOfStops"
-                value={flightDetails.numberOfStops}
+                id='no_of_stops'
+                value={flightDetails.no_of_stops}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
@@ -167,8 +169,8 @@ export default function AddFlight() {
               <label className="block text-gray-700 font-semibold mb-2">Price</label>
               <input
                 type="number"
-                name="numberOfStops"
-                value={flightDetails.numberOfStops}
+                id='price'
+                value={flightDetails.price}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 required
