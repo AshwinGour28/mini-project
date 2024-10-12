@@ -8,8 +8,8 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.
     dialect: 'mysql',
 })
 
-const Flight = sequelize.define('Flight', {
-    flight: {
+const Flight = sequelize.define('Flights', {
+    flightId: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
@@ -47,6 +47,10 @@ const Flight = sequelize.define('Flight', {
         allowNull: false,
     },
     price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    reg_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
     }
