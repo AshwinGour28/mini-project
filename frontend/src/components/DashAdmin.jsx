@@ -7,7 +7,11 @@ export default function DashAdmin() {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-indigo-400 to-blue-500 p-8">
       {/* Main Content Area */}
-      <div className="w-full max-w-7xl bg-white p-10 rounded-lg shadow-lg border border-gray-200">
+      <div className="w-full max-w-7xl bg-white p-10 rounded-lg shadow-lg border border-gray-200" 
+           style={{ 
+             animation: 'slide-in 0.5s ease-out forwards', 
+             opacity: 0 
+           }}>
         {/* Admin Panel Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-semibold text-gray-800">Admin Dashboard</h1>
@@ -45,6 +49,20 @@ export default function DashAdmin() {
           </Link>
         </div>
       </div>
+
+      {/* CSS for Slide-in Animation */}
+      <style>{`
+        @keyframes slide-in {
+          0% {
+            transform: translateY(-30px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }
