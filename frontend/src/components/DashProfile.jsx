@@ -11,24 +11,18 @@ export default function DashProfile() {
   const [formData, setFormData] = useState({});
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
-<<<<<<< HEAD
   const [showModal, setShowModal] = useState(false);
-=======
   const [isVisible, setIsVisible] = useState(false); // State to control visibility for animation
 
->>>>>>> 652991be0461b11f128b51e5e9aab0faceaff8bf
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     console.log(currentUser.reg_id);
     if(Object.keys(formData).length === 0){
-=======
     if (Object.keys(formData).length === 0) {
->>>>>>> 652991be0461b11f128b51e5e9aab0faceaff8bf
       setUpdateUserError("No changes made");
       return;
     }
@@ -54,8 +48,9 @@ export default function DashProfile() {
       dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
     }
-<<<<<<< HEAD
   }
+  };
+
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -74,9 +69,6 @@ export default function DashProfile() {
       dispatch(deleteUserFailure(error.message));
     }
   }
-=======
-  };
-
   // Inline styles for slide-in animation
   const slideInStyle = {
     animation: isVisible ? 'slide-in 0.5s ease-out forwards' : 'none',
@@ -109,7 +101,6 @@ export default function DashProfile() {
     };
   }, []);
 
->>>>>>> 652991be0461b11f128b51e5e9aab0faceaff8bf
   return (
     <form className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-8" onSubmit={handleSubmit}>
       <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-xl transition-transform transform hover:scale-105" style={slideInStyle}>
