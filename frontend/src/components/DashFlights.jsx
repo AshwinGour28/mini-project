@@ -9,6 +9,7 @@ export default function DashFlights() {
   const [userFlights, setUserFlights] = useState([]); 
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [flightIdToDelete, setFlightIdToDelete] = useState('');
   useEffect(()=>{
     const fetchFlights = async () => {
       try {
@@ -43,6 +44,27 @@ export default function DashFlights() {
     }
     catch{
       console.log(error.message);
+    }
+  }
+
+  const handleDeleteFlight = async()=>{
+    setShowModal(false);
+    try {
+      const res = await fetch(`http://localhost:3000/api/flight/delete-flight/${flightIdToDelete}/${currentUser.reg_id}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+        }
+      );
+      const data = await res.json();
+      if(!res.ok){
+        console.log(data.message);
+      }
+      else{
+        setUserFlights((prev)=>prev.filter((flight)=>flight.flightId !== flightIdToDelete));
+      }
+    } catch (error) {
+      console.log(error.message)
     }
   }
 
@@ -87,7 +109,7 @@ export default function DashFlights() {
                 <Table.Cell>
                   <span onClick={()=>{
                     setShowModal(true);
-                    // setflightIdToDelete(flight._id);
+                    setFlightIdToDelete(flight.flightId);
                   }} className='font-medium text-red-500 hover:underline cursor-pointer'>
                     Delete
                   </span>
@@ -125,7 +147,7 @@ export default function DashFlights() {
               <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto'/>
               <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete this flight?</h3>
               <div className='flex justify-center gap-4'>
-                <Button color='failure' /*onClick={handleDeleteflight}*/>Yes, I'm sure</Button>
+                <Button color='failure' onClick={handleDeleteFlight}>Yes, I'm sure</Button>
                 <Button color='gray' onClick={() => setShowModal(false)}>No, cancle</Button>
               </div>
             </div>

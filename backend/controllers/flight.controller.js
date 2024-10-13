@@ -72,3 +72,22 @@ export const getFlights = async (req, res, next) => {
         next(error);
     }
 };
+
+export const deleteFlight = async (req, res, next) => {
+    if (!req.user.isAdmin || req.user.id != req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to delete this flight'));
+    }
+
+    try {
+        const deletedFlight = await Flight.destroy({
+            where: { flightId: req.params.flightId } 
+        });
+        if (deletedFlight) {
+            res.status(200).json('Flight has been deleted');
+        } else {
+            res.status(404).json('Flight not found');
+        }
+    } catch (error) {
+        next(error);
+    }
+};
