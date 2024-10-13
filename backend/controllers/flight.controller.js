@@ -1,5 +1,7 @@
 import Flight from "../models/flight.model.js";
 import { errorHandler } from "../utils/error.js"
+import { Op } from 'sequelize';
+
 
 export const addFlight = async (req, res, next) => {
     console.log(req.user.id);
@@ -20,6 +22,53 @@ export const addFlight = async (req, res, next) => {
     }catch(error){
         next(error)
     }
-    
-    
 }
+
+export const getFlights = async (req, res, next) => {
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortDirection = req.query.order === 'asc' ? 'ASC' : 'DESC';
+
+        const queryOptions = {
+            where: {
+                ...(req.query.flightId && { flightId: req.query.flightId }), 
+                ...(req.query.reg_id && { reg_id: req.query.reg_id }),  
+                ...(req.query.date && { date: req.query.date }),  
+                ...(req.query.arrival_time && { arrival_time: req.query.arrival_time }),  
+                ...(req.query.dep_time && { dep_time: req.query.dep_time }),  
+                ...(req.query.source && { source: req.query.source }), 
+                ...(req.query.destination && { destination: req.query.destination }), 
+                ...(req.query.searchTerm && {
+                    [Op.or]: [
+                        { route: { [Op.like]: `%${req.query.searchTerm}%` } },
+                    ],
+                }),
+            },
+            order: [['updatedAt', sortDirection]],
+            offset: startIndex,
+            limit: limit,
+        };
+
+        const flights = await Flight.findAll(queryOptions);
+
+        const totalFlights = await Flight.count();
+
+        const now = new Date();
+        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+
+        const lastMonthFlights = await Flight.count({
+            where: {
+                createdAt: { [Op.gte]: oneMonthAgo },
+            },
+        });
+
+        res.status(200).json({
+            flights,
+            totalFlights,
+            lastMonthFlights,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
