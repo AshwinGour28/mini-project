@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import { HiUser, HiArrowSmRight } from 'react-icons/hi';
+import { HiUser, HiArrowSmRight, HiDocumentText } from 'react-icons/hi';
 import { FaUserShield } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -42,7 +42,7 @@ export default function DashSidebar() {
   return (
     <Sidebar className="w-full md:w-56 bg-gray-300 shadow-lg"> {/* Changed to bg-gray-300 for a darker shade */}
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
+        <Sidebar.ItemGroup className='flex flex-col gap-1'>
 
           {/* Profile Section */}
           <Sidebar.Item>
@@ -83,6 +83,21 @@ export default function DashSidebar() {
                 }`}
               >
                 <span className="text-lg">Admin</span>
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {/* Flights Link (for admin users only) */}
+          {currentUser.isAdmin && (
+            <Link to='/dashboard?tab=flights'>
+              <Sidebar.Item   
+                active={tab === 'flights'}
+                icon={HiDocumentText}
+                className={`hover:bg-teal-100 p-3 rounded-lg transition-all ${
+                  tab === 'flights' ? 'bg-teal-200 text-teal-700' : 'text-gray-700'
+                }`}
+              >
+                <span className="text-lg">Flights</span>
               </Sidebar.Item>
             </Link>
           )}

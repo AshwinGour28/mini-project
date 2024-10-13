@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
 import DashAdmin from '../components/DashAdmin';
+import DashFlights from '../components/DashFlights';
 
 export default function Dashboard() {
     const location = useLocation();
@@ -59,6 +60,7 @@ export default function Dashboard() {
             <div className='flex-grow' style={slideInStyle}>
                 {tab === 'profile' && <DashProfile />}
                 {tab === 'admin' && <DashAdmin />}
+                {tab === 'flights' && <DashFlights />}
             </div>
         </div>
     )
