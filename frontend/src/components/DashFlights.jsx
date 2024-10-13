@@ -27,7 +27,7 @@ export default function DashFlights() {
     if(currentUser.isAdmin){
       fetchFlights();
     }
-  }, [currentUser._id]);
+  }, [currentUser.reg_id]);
 
   const handleShowMore = async()=>{
     const startIndex = userFlights.length;
