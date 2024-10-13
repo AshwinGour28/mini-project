@@ -33,7 +33,7 @@ export const getFlights = async (req, res, next) => {
         const queryOptions = {
             where: {
                 ...(req.query.flightId && { flightId: req.query.flightId }), 
-                ...(req.query.reg_id && { reg_id: req.query.reg_id }),  
+                ...(req.query.userId && { reg_id: req.query.userId }),  
                 ...(req.query.date && { date: req.query.date }),  
                 ...(req.query.arrival_time && { arrival_time: req.query.arrival_time }),  
                 ...(req.query.dep_time && { dep_time: req.query.dep_time }),  
