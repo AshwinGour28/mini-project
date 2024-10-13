@@ -28,6 +28,24 @@ export default function DashFlights() {
       fetchFlights();
     }
   }, [currentUser._id]);
+
+  const handleShowMore = async()=>{
+    const startIndex = userFlights.length;
+    try{
+      const res = await fetch(`http://localhost:3000/api/flight/get-flights?userId=${currentUser.reg_id}&startIndex=${startIndex}`);
+      const data = await res.json();
+      if(res.ok){
+        setUserFlights((prev)=>[...prev, ...data.flights]);
+        if(data.flights.length<9){
+          setShowMore(false);
+        }
+      }
+    }
+    catch{
+      console.log(error.message);
+    }
+  }
+
   return (
     <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
       {currentUser.isAdmin && userFlights.length > 0 ? (
@@ -87,7 +105,7 @@ export default function DashFlights() {
         </Table>
         {
           showMore && (
-            <button /*onClick={handleShowMore}*/ className='w-full text-teal-500 self-center text-sm py-7'>
+            <button onClick={handleShowMore} className='w-full text-teal-500 self-center text-sm py-7'>
               Show More
             </button>
           )
