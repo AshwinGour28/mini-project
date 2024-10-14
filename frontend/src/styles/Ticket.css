@@ -1,0 +1,45 @@
+/* Ticket.css */
+.ticket-container {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  .ticket-info {
+    margin: 20px 0;
+  }
+  
+  .ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .ticket-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .ticket-value {
+    color: #555;
+  }
+  
+  .confirm-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .confirm-button:hover {
+    background-color: #45a049;
+  }
+  
