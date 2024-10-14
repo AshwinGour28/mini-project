@@ -1,0 +1,69 @@
+.flight-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .airline-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 30px;
+  }
+  
+  
+  .flight-time-route {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .departure-time, .arrival-time {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .route {
+    font-size: 14px;
+  }
+  
+  .stops-duration {
+    text-align: center;
+  }
+  
+  .duration {
+    font-size: 16px;
+  }
+  
+  .stops {
+    font-size: 14px;
+    color: gray;
+  }
+  
+  .price-actions {
+    text-align: center;
+  }
+  
+  .price {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .view-prices-btn,
+  .lock-price-btn {
+    display: block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  
