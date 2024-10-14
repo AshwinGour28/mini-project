@@ -1,21 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/SearchFlights.css'; // Make sure to import the CSS file
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function SearchFlights() {
-  const [fromCity, setFromCity] = useState('');
-  const [toCity, setToCity] = useState('');
-  const [date, setDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [passengers, setPassengers] = useState(1);
-  const [selectedFare, setSelectedFare] = useState(null);
+  const [formData, setFormData] = useState({
+    source: '',
+    destination: '',
+    date: '',
+    no_of_passengers: '',
+  })
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [flights, setFlights] = useState([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [tripType, setTripType] = useState('One-way');
   const [showTooltip, setShowTooltip] = useState(false);
   const [isVisible, setIsVisible] = useState(false); // For animation
 
-  const handleSearch = (e) => {
+  const handleChange  = (e) => {
+    setFormData({...formData, [e.target.id] : e.target.value.trim()})
+  }
+  
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    console.log(`Searching for flights from ${fromCity} to ${toCity} on ${date} with return on ${returnDate} for ${passengers} passengers, Trip type: ${tripType}, Fare: ${selectedFare}`);
+    const queryParams = {};
+
+    if(formData.source) queryParams.source = formData.source
+    if(formData.destination) queryParams.destination = formData.destination
+    if(formData.date) queryParams.date = formData.date
+    if(formData.no_of_passengers) queryParams.no_of_passengers = formData.no_of_passengers
+    const query = new URLSearchParams(queryParams).toString();
+    navigate(`/searchflights/?${query}`);
+    
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:3000/api/flight/get-flights?${query}`);
+      if(!response.ok){
+        setLoading(false);
+        return;
+      }
+      if(response.ok){
+        const data = await response.json();
+        setFlights(data);
+        setLoading(false);
+        if(data.flights.length > 9){
+          setShowMore(true);
+        } 
+        else{
+          setShowMore(false)
+        }
+      }
+      
+      
+    } catch (error) {
+      console.error('Error fetching flights:', error);
+    }
   };
+console.log(flights);
 
   const cities = [
     'Allahabad', 'Bengaluru', 'Bhopal', 'Bhuj', 'Dehradun',
@@ -36,7 +80,7 @@ export default function SearchFlights() {
   }, []);
 
   return (
-    <div className={`flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 to-blue-100 p-4 ${isVisible ? 'slide-in' : ''}`}>
+    <div className={`flex flex-col items-center justify-center p-4 ${isVisible ? 'slide-in' : ''}`}>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <form onSubmit={handleSearch} className="grid grid-cols-2 gap-6">
           
@@ -47,10 +91,8 @@ export default function SearchFlights() {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="tripType"
                   value="One-way"
                   checked={tripType === 'One-way'}
-                  onChange={() => setTripType('One-way')}
                   className="form-radio h-4 w-4 text-blue-600"
                 />
                 <span className="ml-2 text-lg">One-way</span>
@@ -61,7 +103,6 @@ export default function SearchFlights() {
                   name="tripType"
                   value="Round-trip"
                   checked={tripType === 'Round-trip'}
-                  onChange={() => setTripType('Round-trip')}
                   className="form-radio h-4 w-4 text-blue-600"
                 />
                 <span className="ml-2 text-lg">Round-trip</span>
@@ -73,10 +114,9 @@ export default function SearchFlights() {
           <div className="col-span-2 md:col-span-1">
             <label className="text-gray-700 text-lg font-semibold">From</label>
             <select
-              value={fromCity}
-              onChange={(e) => setFromCity(e.target.value)}
+              id='source'
+              onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
             >
               <option value="" disabled>Select departure city</option>
               {cities.map((city, index) => (
@@ -91,10 +131,9 @@ export default function SearchFlights() {
           <div className="col-span-2 md:col-span-1">
             <label className="text-gray-700 text-lg font-semibold">To</label>
             <select
-              value={toCity}
-              onChange={(e) => setToCity(e.target.value)}
+              id='destination'
+              onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
             >
               <option value="" disabled>Select destination</option>
               {cities.map((city, index) => (
@@ -109,45 +148,43 @@ export default function SearchFlights() {
           <div className="col-span-2 md:col-span-1">
             <label className="text-gray-700 text-lg font-semibold">Departure</label>
             <input
+              id='date'
               type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
 
           {/* Return Date */}
-          <div className={`col-span-2 md:col-span-1 ${tripType === 'One-way' ? 'opacity-50' : ''}`}>
+          {/* <div className={`col-span-2 md:col-span-1 ${tripType === 'One-way' ? 'opacity-50' : ''}`}>
             <label className="text-gray-700 text-lg font-semibold">Return</label>
             <input
               type="date"
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               disabled={tripType === 'One-way'}
             />
-          </div>
+          </div> */}
 
           {/* Passengers Section */}
           <div className="col-span-2">
             <label className="text-gray-700 text-lg font-semibold">Number of Passengers</label>
             <input
+              id='no_of_passengers'
+              onChange={handleChange}
               type="number"
               min="1"
-              value={passengers}
-              onChange={(e) => setPassengers(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
 
           {/* Special Fare Section */}
-          <div className="col-span-2">
-            <label className="text-gray-700 text-lg font-semibold mb-2">Select a special fare</label>
+          {/*<div className="col-span-2">
+             <label className="text-gray-700 text-lg font-semibold mb-2">Select a special fare</label>
             <div className="flex flex-wrap gap-4">
               <button
                 type="button"
-                onClick={() => setSelectedFare('Regular')}
+                onClick={}
                 className={`px-4 py-2 ${selectedFare === 'Regular' ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-700 border border-blue-500'} rounded-md font-semibold`}
               >
                 Regular
@@ -187,11 +224,11 @@ export default function SearchFlights() {
                 )}
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Submit Button */}
           <div className="col-span-2">
-            <button
+            <button onClick={handleSearch}
               type="submit"
               className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300"
             >
