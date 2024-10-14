@@ -1,8 +1,20 @@
 import React from "react";
 import "../styles/FlightCard.css"; // Assuming you have some basic styles
 import { HiArrowNarrowRight } from "react-icons/hi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const FlightCard = ({ flight }) => {
+    const {currentUser} = useSelector((state)=> state.user);
+    const navigate = useNavigate();
+    const handleClick = () => {
+        if(currentUser == null){
+            navigate('/login')
+        }
+        else{
+            navigate(`/booking/${flight.flightId}`)
+        }
+    }
   return (
     <div className="flex flex-row gap-20 mt-5 justify-center items-center p-4 w-fit mx-auto bg-white border-4 border-blue-400 rounded-2xl text-2xl">
         {/* Airline and flight number */}
@@ -34,7 +46,7 @@ export const FlightCard = ({ flight }) => {
       {/* Price and actions */}
       <div>
         <div className="price">₹ {flight.price}</div>
-        <button className="view-prices-btn">BOOK NOW</button>
+        <button className="view-prices-btn" onClick={handleClick}>BOOK NOW</button>
       </div>
     </div>
   );
