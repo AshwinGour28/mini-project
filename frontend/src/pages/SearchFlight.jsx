@@ -19,10 +19,54 @@ export default function SearchFlight() {
   const [tripType, setTripType] = useState('One-way');
   const [isVisible, setIsVisible] = useState(false); // For animation
 
+  const getFormattedDate = (date) => {
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two digits for month
+    let day = String(date.getDate()).padStart(2, '0'); // Ensure two digits for day
+
+    return `${year}-${month}-${day}`;
+  };
+  
   const handleChange  = (e) => {
     setFormData({...formData, [e.target.id] : e.target.value.trim()})
   }
   
+  const handleShowMore = async () => {
+    const noOfFlights = flights.flights.length;
+    const startIndex = noOfFlights;
+    const queryParams = {};
+
+    if(formData.source) queryParams.source = formData.source
+    if(formData.destination) queryParams.destination = formData.destination
+    if(formData.date) queryParams.date = formData.date
+    if(formData.no_of_passengers) queryParams.no_of_passengers = formData.no_of_passengers
+    queryParams.startIndex = startIndex;
+    const query = new URLSearchParams(queryParams).toString();
+    navigate(`/searchflights/?${query}`);
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:3000/api/flight/get-flights?${query}`);
+      if(!response.ok){
+        setLoading(false);
+        return;
+      }
+      if(response.ok){
+        const data = await response.json();
+        setFlights([...flights, ...flights.flights]);
+        setLoading(false);
+        if(data.flights.length > 4){
+          setShowMore(true);
+        } 
+        else{
+          setShowMore(false)
+        }
+      }
+      
+      
+    } catch (error) {
+      console.error('Error fetching flights:', error);
+    }
+  }
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -46,7 +90,7 @@ export default function SearchFlight() {
         const data = await response.json();
         setFlights(data);
         setLoading(false);
-        if(data.flights.length > 9){
+        if(data.flights.length > 4){
           setShowMore(true);
         } 
         else{
@@ -59,7 +103,6 @@ export default function SearchFlight() {
       console.error('Error fetching flights:', error);
     }
   };
-console.log(flights);
 
   const cities = [
     'Allahabad', 'Bengaluru', 'Bhopal', 'Bhuj', 'Dehradun',
@@ -238,6 +281,7 @@ console.log(flights);
         </form>
       </div>
       <div className='flex flex-col mb-5 w-full'>
+      {loading && <p className='text-xl text-center'>Loading...</p>}
       {
         flights.flights && Array.isArray(flights.flights) && flights.flights.length > 0 ? (
           flights.flights.map((flight) => (
@@ -247,6 +291,7 @@ console.log(flights);
           <p className='text-3xl mt-8 text-center'>No flights available</p>
         )
       }
+      { showMore && <button onClick={handleShowMore} className='text-teal-500 text-lg hover:underline p-7'>Show more</button>}
 
       </div>
     </div>
