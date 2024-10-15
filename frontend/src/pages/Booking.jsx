@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function Booking() {
   const [slideIn, setSlideIn] = useState(false);
   const [formData, setFormData] = useState({});
+  const { flightId } = useParams();
 
   useEffect(() => {
     setSlideIn(true);
@@ -12,8 +14,33 @@ export default function Booking() {
     setFormData({...formData, [e.target.id] : e.target.value.trim()});
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await fetch(`http://localhost:3000/api/booking/add-booking/${flightId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        console.log(data.message);
+        return;
+      }
+      if(res.ok){
+        console.log("Passenger added successfull")
+      }
+    } catch (error) {
+      console.log('Something went wrong');
+    }
+  }
+
   return (
     <div style={pageStyle}>
+      <form onSubmit={handleSubmit}>
       <div style={{ ...containerStyle, ...(slideIn ? slideInStyle : {}) }}>
         {/* Section 1 */}
         <h2 style={headingStyle}>Complete your booking</h2>
@@ -29,9 +56,9 @@ export default function Booking() {
             <input onChange={handleChange} id='gender' type="radio" name="gender" value='female' /> Female
           </label>  
         </div>
-        <input onChange={handleChange} id='mobile_no' type="text" placeholder="Mobile No" style={inputStyle} />
+        <input onChange={handleChange} id='mob_no' type="text" placeholder="Mobile No" style={inputStyle} />
         <input onChange={handleChange} id='email' type="text" placeholder="Email" style={inputStyle} />
-        <input onChange={handleChange} id='passport' type="text" placeholder="Passport Number" style={inputStyle} />
+        <input onChange={handleChange} id='pass_no' type="text" placeholder="Passport Number" style={inputStyle} />
         <button style={buttonStyle}>+ ADD NEW ADULT</button>
         
         {/* Fare Summary Section */}
@@ -43,9 +70,10 @@ export default function Booking() {
         </div>
         
         <div className='flex flex-row justify-center items-center mt-4'>
-        <button style={{ ...buttonStyle, marginLeft: '10px', marginTop: '10px'  }}>Proceed to payment</button>
+        <button type='submit' style={{ ...buttonStyle, marginLeft: '10px', marginTop: '10px'  }}>Proceed to payment</button>
         </div>
       </div>
+      </form>
     </div>
   );
 }
