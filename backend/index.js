@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import flightRoutes from './routes/flight.route.js';
+import bookingRoutes from './routes/booking.route.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/api/user' ,userRoutes);   
 app.use('/api/auth', authRoutes);
 app.use('/api/flight', flightRoutes);
+app.use('/api/booking', bookingRoutes)
 
 const db = mysql.createConnection({
     host: process.env.HOST,

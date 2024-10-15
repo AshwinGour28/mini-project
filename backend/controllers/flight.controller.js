@@ -4,7 +4,6 @@ import { Op } from 'sequelize';
 
 
 export const addFlight = async (req, res, next) => {
-    console.log(req.user.id);
     if(!req.user.isAdmin){
         return next(errorHandler(403, 'You are not allowed to add new flight'));
     }
@@ -45,7 +44,7 @@ export const getFlights = async (req, res, next) => {
                     ],
                 }),
             },
-            order: [['updatedAt', sortDirection]],
+            order: [['price', sortDirection]],
             offset: startIndex,
             limit: limit,
         };

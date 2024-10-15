@@ -7,5 +7,4 @@ const router = express.Router();
 router.post('/add-flight', verifyToken, addFlight);
 router.get('/get-flights', getFlights);
 router.delete('/delete-flight/:flightId/:userId', verifyToken, deleteFlight);
-
 export default router;

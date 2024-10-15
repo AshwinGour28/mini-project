@@ -32,7 +32,7 @@ const Booking = sequelize.define('Booking', {
         allowNull: false,
     },
     mob_no: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.STRING,
         defaultValue: false,
     },
     email: {
@@ -61,7 +61,7 @@ sequelize.sync()
     console.log("Booking table created successfully.")
 })
 .catch(error =>{
-    console.error("Error creating tabel: ", error);
+    console.error("Error creating table: ", error);
 });
 
 export default Booking;
