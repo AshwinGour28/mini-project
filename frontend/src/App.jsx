@@ -16,6 +16,7 @@ import UpdateFlight from './pages/UpdateFlight'
 import DeleteFlight from './pages/DeleteFlight'
 import Booking from './pages/Booking'
 import Payment from './pages/Payment'
+import TicketDownloadable from './components/TicketDownloadable';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
           <Route path='/add-flight' element={<AddFlight />} />
           <Route path='/update-flight' element={<UpdateFlight />} />
           <Route path='/delete-flight' element={<DeleteFlight />} />
+          <Route path='/ticket-downloadable' element={<TicketDownloadable />} />
         </Route>
       </Routes>
       <Footer />
