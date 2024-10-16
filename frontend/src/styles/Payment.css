@@ -1,62 +1,131 @@
-/* Payment.css */
+/* Keyframes for slide-in animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px); /* Start by translating 50px from the bottom */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at the original position */
+  }
+}
+
+/* Reset some default body styles */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .payment-container {
-    min-height: 100vh;
-    padding: 20px;
-    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
-    color: white; /* Text color */
-  }
-  
-  .payment-title {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+.payment-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+.flight-details, .passenger-details {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #ffecb3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+strong {
+  color: #ffd54f;
+}
+
+.payment-button {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+  display: block;
+  margin: 0 auto;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+.payment-button:hover {
+  background-color: #e65100;
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.8rem;
+  color: white;
+  margin-top: 20%;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ff8a65;
+  margin-top: 20%;
+  animation: slideIn 0.8s ease-out; /* Apply slide-in animation */
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
   .flight-details, .passenger-details {
-    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-    border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
   }
-  
-  h3 {
-    margin: 0;
+
+  .payment-title {
+    font-size: 1.8rem;
   }
-  
+
   p {
-    margin: 5px 0;
+    font-size: 1rem;
   }
-  
+
   .payment-button {
-    background-color: #ff5722; /* Button color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: block;
-    margin: 0 auto;
+    padding: 12px 30px;
+    font-size: 1.1rem;
   }
-  
-  .payment-button:hover {
-    background-color: #e64a19; /* Darker shade on hover */
-  }
-  
-  .loading {
-    text-align: center;
-    font-size: 24px;
-    color: white;
-  }
-  
-  .error-message {
-    text-align: center;
-    font-size: 18px;
-    color: white;
-  }
-  
+}
