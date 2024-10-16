@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import '../styles/Payment.css'; // Import your CSS file
 
 export default function Payment() {
   const location = useLocation();
@@ -7,6 +8,7 @@ export default function Payment() {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true); 
   const { flightId, bookingId } = location.state;
+
   useEffect(() => {
     const fetchFlight = async () => {
       try {
@@ -28,13 +30,13 @@ export default function Payment() {
         } else {
           console.error('No flights found in the response');
         }
-
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching flight:', error);
+      } finally {
         setLoading(false);
       }
     };
+
     const fetchBooking = async () => {
       try {
         const res = await fetch(`http://localhost:3000/api/booking/get-bookings/?book_id=${bookingId}`, {
@@ -55,45 +57,51 @@ export default function Payment() {
         } else {
           console.error('No bookings found in the response');
         }
-
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching booking:', error);
+      } finally {
         setLoading(false);
       }
     };
-
 
     fetchFlight();
     fetchBooking();
   }, [flightId, bookingId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   if (!flight || !booking) {
-    return <div>No data found</div>;
+    return <div className="error-message">No data found</div>;
   }
 
   return (
-    <div>
-      <h2>Payment Summary</h2>
+    <div className="payment-container">
+      <h2 className="payment-title">Payment Summary</h2>
 
       {/* Display flight details */}
-      <div>
+      <div className="flight-details">
         <h3>Flight Details</h3>
-        <p>Flight Number: {flight.flightId}</p>
-        <p>Airline: {flight.airline}</p>
-        <p>Route: {flight.route}</p>
-        <p>Departure: {flight.dep_time}</p>
-        <p>Arrival: {flight.arrival_time}</p>
-        <p>Source: {flight.source}</p>
-        <p>Destination: {flight.destination}</p>
-        <p>Price: ₹{flight.price}</p>
+        <p><strong>Flight Number:</strong> {flight.flightId}</p>
+        <p><strong>Airline:</strong> {flight.airline}</p>
+        <p><strong>Route:</strong> {flight.route}</p>
+        <p><strong>Departure:</strong> {flight.dep_time}</p>
+        <p><strong>Arrival:</strong> {flight.arrival_time}</p>
+        <p><strong>Source:</strong> {flight.source}</p>
+        <p><strong>Destination:</strong> {flight.destination}</p>
+        <p><strong>Price:</strong> ₹{flight.price}</p>
       </div>
 
-      <button>Proceed to Payment</button>
+      {/* Display passenger details */}
+      <div className="passenger-details">
+        <h3>Passenger Details</h3>
+        <p><strong>Name:</strong> {booking.passengerName}</p>
+        <p><strong>Email:</strong> {booking.passengerEmail}</p>
+        <p><strong>Phone:</strong> {booking.passengerPhone}</p>
+      </div>
+
+      <button className="payment-button">Proceed to Payment</button>
     </div>
   );
 }

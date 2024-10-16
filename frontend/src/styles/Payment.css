@@ -1,0 +1,62 @@
+/* Payment.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .payment-container {
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+    color: white; /* Text color */
+  }
+  
+  .payment-title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .flight-details, .passenger-details {
+    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    margin: 0;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  
+  .payment-button {
+    background-color: #ff5722; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .payment-button:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+  }
+  
+  .error-message {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+  }
+  
