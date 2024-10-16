@@ -75,16 +75,27 @@ export default function Header() {
                 />
             </Link>
             <Navbar.Collapse>
-                <div className="flex space-x-4">
-                    {['/', '/searchflights', '/about'].map((path, index) => (
-                        <Navbar.Link key={path}>
-                            <Link to={path} className={`text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300 transform ${visibility.navItems[index] ? 'translate-x-0' : '-translate-x-full'}`} style={{ transitionDelay: `${(index + 1) * 100}ms` }}>
-                                {path === '/' ? 'Home' : path.slice(1).charAt(0).toUpperCase() + path.slice(2)} 
-                            </Link>
-                        </Navbar.Link>
-                    ))}
-                </div>
-            </Navbar.Collapse>
+  <div className="flex space-x-4">
+    {['/', '/searchflights', '/about'].map((path, index) => (
+      <Navbar.Link key={path}>
+        <Link
+          to={path}
+          className={`text-2xl text-white hover:bg-white hover:bg-opacity-20 rounded-lg px-3 py-1 transition duration-300 transform ${
+            visibility.navItems[index] ? 'translate-x-0' : '-translate-x-full'
+          }`}
+          style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+        >
+          {path === '/'
+            ? 'Home'
+            : path === '/searchflights'
+            ? 'Search Flights'
+            : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+        </Link>
+      </Navbar.Link>
+    ))}
+  </div>
+</Navbar.Collapse>
+
             <div className="flex gap-2">
                 {currentUser ? (
                     <Dropdown arrowIcon={false} inline label={
