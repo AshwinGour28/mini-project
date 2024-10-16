@@ -15,6 +15,7 @@ import AddFlight from './pages/AddFlight'
 import UpdateFlight from './pages/UpdateFlight'
 import DeleteFlight from './pages/DeleteFlight'
 import Booking from './pages/Booking'
+import Payment from './pages/Payment'
 
 export default function App() {
   return (
@@ -27,9 +28,11 @@ export default function App() {
         <Route path="/searchflights" element={<SearchFlight />} /> 
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/booking/:flightId' element={<Booking />}/>
+        
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/booking/:flightId' element={<Booking />}/>
+          <Route path='/payment/:book_id/:flightId' element={<Payment />}/>
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
           <Route path='/add-admin' element={<AddAdmin />} />

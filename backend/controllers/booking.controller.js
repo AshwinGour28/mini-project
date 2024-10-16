@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Booking from "../models/booking.model.js";
 import { errorHandler } from "../utils/error.js";
 
@@ -18,3 +19,44 @@ export const addBooking = async (req, res, next) => {
         next(error)
     }
 } 
+
+export const getBooking = async (req, res, next) => {
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortDirection = req.query.order === 'asc' ? 'ASC' : 'DESC';
+
+        const queryOptions = {
+            where: {
+                ...(req.query.book_id && { book_id: req.query.book_id }), 
+                ...(req.query.userId && { reg_id: req.query.userId }),  
+                ...(req.query.flightId && { date: req.query.flightId }),  
+                
+            },
+            order: [['updatedAt', sortDirection]],
+            offset: startIndex,
+            limit: limit,
+        };
+
+        const bookings = await Booking.findAll(queryOptions);
+
+        const totalBookings = await Booking.count();
+
+        const now = new Date();
+        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+
+        const lastMonthBookings = await Booking.count({
+            where: {
+                createdAt: { [Op.gte]: oneMonthAgo },
+            },
+        });
+
+        res.status(200).json({
+            bookings,
+            totalBookings,
+            lastMonthBookings,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

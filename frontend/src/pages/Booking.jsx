@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Booking() {
   const [slideIn, setSlideIn] = useState(false);
   const [formData, setFormData] = useState({});
   const { flightId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSlideIn(true);
@@ -32,9 +33,11 @@ export default function Booking() {
       }
       if(res.ok){
         console.log("Passenger added successfull")
+        navigate(`/payment/${data.book_id}/${flightId}`, {state: {bookingId: data.book_id, flightId: String(flightId)}});
+        
       }
     } catch (error) {
-      console.log('Something went wrong');
+      console.log(data.message);
     }
   }
 
