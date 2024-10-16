@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
-import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend, ResponsiveContainer,} from 'recharts';
+import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend, ResponsiveContainer, PieChart, Pie, Cell,} from 'recharts';
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF8C00', '#FF1493'];
 
 export default function DashboardComponenet() {
 
   const [flightData, setFlightData] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [bookings , setBookings] = useState([]);
+  const [airlineNames, setAirlineNames] = useState([])
+  const [bookingAirlines, setBookingAirlines] = useState([]);
+  const [pieData, setPieData] = useState([]);
   const [lastMonthBookings, setLastMonthBookings] = useState(0);
   const [monthlyCounts, setMonthlyCounts] = useState(Array(12).fill(0));
   const {currentUser} = useSelector((state)=> state.user);
@@ -53,13 +58,43 @@ export default function DashboardComponenet() {
           console.log(error.message)
         }
        }
+      
+       const fetchBookingWithAirline = async () =>{
+        try {
+          const res = await fetch('http://localhost:3000/api/booking/get-bookings-airline')
+          const data = await res.json();
+          if(res.ok && Array.isArray(data.bookings)){
+            setBookingAirlines(data.bookings);
+            const airlines = data.bookings.map(booking => booking.flight?.airline).filter(Boolean);
+            setAirlineNames(airlines);
+            
+            const airlineCounts = {};
+          airlines.forEach(airline => {
+            airlineCounts[airline] = (airlineCounts[airline] || 0) + 1;
+          });
+
+          // Format data for the Pie Chart
+          const formattedData = Object.entries(airlineCounts).map(([name, value]) => ({
+            name,
+            value
+          }));
+          setPieData(formattedData);
+          }
+          else{
+            console.log('Failed to fetch data', data.message)
+        }
+        } catch (error) {
+          console.log(error.message)
+        }
+       }
       if(currentUser.isAdmin){
         fetchUsers();
         fetchFlights();
         fetchBooking();
+        fetchBookingWithAirline();
       }
    }, [currentUser.isAdmin]);
-
+   console.log(pieData);
    
    const countFlightsByMonth = (flights) => {
     const counts = Array(12).fill(0);
@@ -76,6 +111,18 @@ export default function DashboardComponenet() {
     });
 
     setMonthlyCounts(counts); 
+  };
+  
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central">
+        {`${name} (${(percent * 100).toFixed(0)}%)`}
+      </text>
+    );
   };
 
   const monthNames = ["January", "February", "March", "April", "May", "June", 
@@ -112,24 +159,31 @@ export default function DashboardComponenet() {
           <Legend />
           <Bar dataKey="count" fill="#8884d8" />
       </BarChart>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+      <div>
+      <h1>Booking Airlines Pie Chart</h1>
+      {pieData.length > 0 ? (
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={pieData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              fill="#8884d8"
+              label={renderCustomizedLabel}
+            >
+              {pieData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <p>No data available for the pie chart.</p>
+      )}
+    </div>
     </div>
   )
 }
