@@ -100,7 +100,6 @@ export default function Payment() {
         <p><strong>Email:</strong> {booking.passengerEmail}</p>
         <p><strong>Phone:</strong> {booking.passengerPhone}</p>
       </div>
-
     <Link to='/ticket-downloadable' >
       <button className="payment-button">Proceed to Payment</button>
       </Link>
