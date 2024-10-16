@@ -61,7 +61,7 @@ export default function Booking() {
         </div>
         <input onChange={handleChange} id='mob_no' type="text" placeholder="Mobile No" style={inputStyle} />
         <input onChange={handleChange} id='email' type="text" placeholder="Email" style={inputStyle} />
-        <input onChange={handleChange} id='pass_no' type="text" placeholder="Passport Number" style={inputStyle} />
+        <input onChange={handleChange} id='pass_no' type="text" placeholder="Aadhar Number" style={inputStyle} />
         <button style={buttonStyle}>+ ADD NEW ADULT</button>
         
         {/* Fare Summary Section */}
