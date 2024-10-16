@@ -1,5 +1,6 @@
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import Booking from "../models/booking.model.js";
+import Flight from "../models/flight.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const addBooking = async (req, res, next) => {
@@ -60,3 +61,24 @@ export const getBooking = async (req, res, next) => {
         next(error);
     }
 };
+
+export const getBookingsWithAirline = async (req, res, next) => {
+    try {
+      const bookingsWithAirlines = await Booking.findAll({
+        include: [
+          {
+            model: Flight,
+            as: 'flight',
+            attributes: ['airline'],  // Get only the 'airline' column from Flight
+            where: {
+              flightId: Sequelize.col('Booking.flightId')
+            }
+          }
+        ]
+      });
+  
+      res.status(200).json({ bookings: bookingsWithAirlines });
+    } catch (error) {
+      next(error)
+    }
+  };

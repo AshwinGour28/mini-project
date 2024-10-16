@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { Sequelize, DataTypes } from "sequelize";
+import Flight from './flight.model.js';
 
 dotenv.config();
 
@@ -55,6 +56,8 @@ const Booking = sequelize.define('Booking', {
 },{
     timestamps: true,
 });
+
+Booking.belongsTo(Flight, { foreignKey: 'flightId', as: 'flight' });
 
 sequelize.sync()
 .then(()=>{

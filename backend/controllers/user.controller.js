@@ -86,3 +86,17 @@ export const deleteUser = async (req, res, next) => {
         next(error);
     }
 };
+
+export const getUsers = async (req, res, next) => {
+    try {
+        const users = await User.findAll();
+        const usersCount = await User.count();
+
+        return res.status(200).json({
+            users,
+            totalUsers: usersCount, 
+        });
+    } catch (error) {
+        next(error);
+    }
+}
