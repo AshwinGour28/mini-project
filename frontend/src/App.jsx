@@ -16,7 +16,7 @@ import UpdateFlight from './pages/UpdateFlight'
 import DeleteFlight from './pages/DeleteFlight'
 import Booking from './pages/Booking'
 import Payment from './pages/Payment'
-import TicketDownloadable from './components/TicketDownloadable';
+import TicketDownloadable from './pages/TicketDownloadable'
 
 export default function App() {
   return (
@@ -34,6 +34,7 @@ export default function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/booking/:flightId' element={<Booking />}/>
           <Route path='/payment/:book_id/:flightId' element={<Payment />}/>
+          <Route path='/ticket-downloadable' element={<TicketDownloadable />} />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
           <Route path='/add-admin' element={<AddAdmin />} />
