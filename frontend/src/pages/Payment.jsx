@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../styles/Payment.css'; // Import your CSS file
 
 export default function Payment() {
@@ -101,7 +101,8 @@ export default function Payment() {
         <p><strong>Phone:</strong> {booking.passengerPhone}</p>
       </div>
 
-      <button className="payment-button">Proceed to Payment</button>
+        <button className="payment-button">Proceed to Payment</button>
+     
     </div>
   );
 }
