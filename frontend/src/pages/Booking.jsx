@@ -16,7 +16,7 @@ export default function Booking() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await fetch(`http://localhost:3000/api/booking/add-booking/${flightId}`, {
         method: 'POST',
@@ -27,17 +27,23 @@ export default function Booking() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         console.log(data.message);
         return;
       }
-      if(res.ok){
-        console.log("Passenger added successfull")
-        navigate(`/payment/${data.book_id}/${flightId}`, {state: {bookingId: data.book_id, flightId: String(flightId)}});
-        
+      if (res.ok) {
+        console.log("Passenger added successfully");
+        // Pass the passenger details along with bookingId and flightId
+        navigate(`/payment/${data.book_id}/${flightId}`, { 
+          state: { 
+            bookingId: data.book_id, 
+            flightId: String(flightId),
+            passengerDetails: formData // Pass the passenger details
+          } 
+        });
       }
     } catch (error) {
-      console.log(data.message);
+      console.log(error.message);
     }
   }
 
@@ -67,9 +73,9 @@ export default function Booking() {
         {/* Fare Summary Section */}
         <div style={fareSummaryStyle}>
           <h4 style={{ color: '#388e3c' }}>Fare Summary</h4>
-          <p>Base Fare: ₹ {formData.price}</p>
+          <p>Base Fare: ₹ 0</p>
           <p>Taxes and Surcharges: ₹ 0</p>
-          <p>Total Amount: ₹ {formData.price}</p>
+          <p>Total Amount: ₹ 0</p>
         </div>
         
         <div className='flex flex-row justify-center items-center mt-4'>
@@ -80,6 +86,10 @@ export default function Booking() {
     </div>
   );
 }
+
+// Styles...
+
+
 
 const pageStyle = {
   background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
