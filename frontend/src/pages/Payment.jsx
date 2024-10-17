@@ -110,17 +110,13 @@ export default function Payment() {
 
       <div className="passenger-details" ref={ticketRef}>
         <h3>Passenger Details</h3>
-<<<<<<< HEAD
-        <p><strong>Name:</strong> {booking.f_name} {booking.l_name}</p>
-        <p><strong>Email:</strong> {booking.email}</p>
-        <p><strong>Phone:</strong> {booking.mob_no}</p>
-=======
+
         <p><strong>First Name:</strong> {passengerDetails.f_name}</p>
         <p><strong>Last Name:</strong> {passengerDetails.l_name}</p>
         <p><strong>Email:</strong> {passengerDetails.email}</p>
         <p><strong>Phone:</strong> {passengerDetails.mob_no}</p>
         <p><strong>Aadhar Number:</strong> {passengerDetails.pass_no}</p>
->>>>>>> d0c13655d704669d13590a24b836201237060710
+
       </div>
 
       

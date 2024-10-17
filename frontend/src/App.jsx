@@ -16,7 +16,7 @@ import UpdateFlight from './pages/UpdateFlight'
 import DeleteFlight from './pages/DeleteFlight'
 import Booking from './pages/Booking'
 import Payment from './pages/Payment'
-import FinalTicket from './pages/FinalTicket'
+
 
 
 
@@ -36,7 +36,7 @@ export default function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/booking/:flightId' element={<Booking />}/>
           <Route path='/payment/:book_id/:flightId' element={<Payment />}/>
-          <Route path='/final-ticket/:book_id/:flightId' element={<FinalTicket />}/>
+          
 
           
         </Route>
