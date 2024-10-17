@@ -16,7 +16,7 @@ export default function Booking() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await fetch(`http://localhost:3000/api/booking/add-booking/${flightId}`, {
         method: 'POST',
@@ -27,59 +27,69 @@ export default function Booking() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         console.log(data.message);
         return;
       }
-      if(res.ok){
-        console.log("Passenger added successfull")
-        navigate(`/payment/${data.book_id}/${flightId}`, {state: {bookingId: data.book_id, flightId: String(flightId)}});
-        
+      if (res.ok) {
+        console.log("Passenger added successfully");
+        // Pass the passenger details along with bookingId and flightId
+        navigate(`/payment/${data.book_id}/${flightId}`, { 
+          state: { 
+            bookingId: data.book_id, 
+            flightId: String(flightId),
+            passengerDetails: formData // Pass the passenger details
+          } 
+        });
       }
     } catch (error) {
-      console.log(data.message);
+      console.log(error.message);
     }
   }
 
   return (
     <div style={pageStyle}>
       <form onSubmit={handleSubmit}>
-      <div style={{ ...containerStyle, ...(slideIn ? slideInStyle : {}) }}>
-        {/* Section 1 */}
-        <h2 style={headingStyle}>Complete your booking</h2>
-        <div style={{ marginTop: '20px', color: '#388e3c', fontWeight: 'bold' }}>Traveller Details</div>
-        <div style={{ color: '#4caf50', fontWeight: 'bold', marginBottom: '10px' }}>ADULT 1</div>
-        <input onChange={handleChange} id='f_name' type="text" placeholder="First & Middle Name" style={inputStyle} />
-        <input onChange={handleChange} id='l_name' type="text" placeholder="Last Name" style={inputStyle} />
-        <div style={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0' }}>
-          <label>
-            <input onChange={handleChange} id='gender' type="radio" name="gender" value='male' /> Male
-          </label>
-          <label>
-            <input onChange={handleChange} id='gender' type="radio" name="gender" value='female' /> Female
-          </label>  
+        <div style={{ ...containerStyle, ...(slideIn ? slideInStyle : {}) }}>
+          {/* Section 1 */}
+          <h2 style={headingStyle}>Complete your booking</h2>
+          <div style={{ marginTop: '20px', color: '#388e3c', fontWeight: 'bold' }}>Traveller Details</div>
+          <div style={{ color: '#4caf50', fontWeight: 'bold', marginBottom: '10px' }}>ADULT 1</div>
+          <input onChange={handleChange} id='f_name' type="text" placeholder="First & Middle Name" style={inputStyle} />
+          <input onChange={handleChange} id='l_name' type="text" placeholder="Last Name" style={inputStyle} />
+          <div style={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0' }}>
+            <label>
+              <input onChange={handleChange} id='gender' type="radio" name="gender" value='male' /> Male
+            </label>
+            <label>
+              <input onChange={handleChange} id='gender' type="radio" name="gender" value='female' /> Female
+            </label>  
+          </div>
+          <input onChange={handleChange} id='mob_no' type="text" placeholder="Mobile No" style={inputStyle} />
+          <input onChange={handleChange} id='email' type="text" placeholder="Email" style={inputStyle} />
+          <input onChange={handleChange} id='pass_no' type="text" placeholder="Aadhar Number" style={inputStyle} />
+          <button style={buttonStyle}>+ ADD NEW ADULT</button>
+          
+          {/* Fare Summary Section */}
+          <div style={fareSummaryStyle}>
+            <h4 style={{ color: '#388e3c' }}>Fare Summary</h4>
+            <p>Base Fare: ₹ 0</p>
+            <p>Taxes and Surcharges: ₹ 0</p>
+            <p>Total Amount: ₹ 0</p>
+          </div>
+          
+          <div className='flex flex-row justify-center items-center mt-4'>
+            <button type='submit' style={{ ...buttonStyle, marginLeft: '10px', marginTop: '10px' }}>Proceed to payment</button>
+          </div>
         </div>
-        <input onChange={handleChange} id='mob_no' type="text" placeholder="Mobile No" style={inputStyle} />
-        <input onChange={handleChange} id='email' type="text" placeholder="Email" style={inputStyle} />
-        <input onChange={handleChange} id='pass_no' type="text" placeholder="Aadhar Number" style={inputStyle} />
-        <button style={buttonStyle}>+ ADD NEW ADULT</button>
-        
-        {/* Fare Summary Section */}
-        <div style={fareSummaryStyle}>
-          <h4 style={{ color: '#388e3c' }}>Fare Summary</h4>
-          <p>Base Fare: ₹ 0</p>
-          <p>Taxes and Surcharges: ₹ 0</p>
-          <p>Total Amount: ₹ 0</p>
-        </div>
-        
-        <div className='flex flex-row justify-center items-center mt-4'>
-        <button type='submit' style={{ ...buttonStyle, marginLeft: '10px', marginTop: '10px'  }}>Proceed to payment</button>
-        </div>
-      </div>
       </form>
     </div>
   );
 }
+
+// Styles...
+
+
 
 const pageStyle = {
   background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',

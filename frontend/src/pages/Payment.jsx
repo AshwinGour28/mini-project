@@ -7,7 +7,7 @@ export default function Payment() {
   const [flight, setFlight] = useState(null);
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true); 
-  const { flightId, bookingId } = location.state;
+  const { flightId, bookingId, passengerDetails } = location.state; // Get passenger details from state
 
   useEffect(() => {
     const fetchFlight = async () => {
@@ -96,13 +96,17 @@ export default function Payment() {
       {/* Display passenger details */}
       <div className="passenger-details">
         <h3>Passenger Details</h3>
-        <p><strong>Name:</strong> {booking.passengerName}</p>
-        <p><strong>Email:</strong> {booking.passengerEmail}</p>
-        <p><strong>Phone:</strong> {booking.passengerPhone}</p>
+        <p><strong>First Name:</strong> {passengerDetails.f_name}</p>
+        <p><strong>Last Name:</strong> {passengerDetails.l_name}</p>
+        <p><strong>Email:</strong> {passengerDetails.email}</p>
+        <p><strong>Phone:</strong> {passengerDetails.mob_no}</p>
+        <p><strong>Aadhar Number:</strong> {passengerDetails.pass_no}</p>
       </div>
-    <Link to='/ticket-downloadable' >
-      <button className="payment-button">Proceed to Payment</button>
+      <Link to='/ticket-downloadable'>
+        <button className="payment-button">Proceed to Payment</button>
       </Link>
     </div>
   );
 }
+
+// Styles...
