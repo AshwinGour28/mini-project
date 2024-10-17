@@ -96,9 +96,9 @@ export default function Payment() {
       {/* Display passenger details */}
       <div className="passenger-details">
         <h3>Passenger Details</h3>
-        <p><strong>Name:</strong> {booking.passengerName}</p>
-        <p><strong>Email:</strong> {booking.passengerEmail}</p>
-        <p><strong>Phone:</strong> {booking.passengerPhone}</p>
+        <p><strong>Name:</strong> {booking.f_name} {booking.l_name}</p>
+        <p><strong>Email:</strong> {booking.email}</p>
+        <p><strong>Phone:</strong> {booking.mob_no}</p>
       </div>
     <Link to='/ticket-downloadable' >
       <button className="payment-button">Proceed to Payment</button>

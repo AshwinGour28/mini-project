@@ -67,9 +67,9 @@ export default function Booking() {
         {/* Fare Summary Section */}
         <div style={fareSummaryStyle}>
           <h4 style={{ color: '#388e3c' }}>Fare Summary</h4>
-          <p>Base Fare: ₹ 0</p>
+          <p>Base Fare: ₹ {formData.price}</p>
           <p>Taxes and Surcharges: ₹ 0</p>
-          <p>Total Amount: ₹ 0</p>
+          <p>Total Amount: ₹ {formData.price}</p>
         </div>
         
         <div className='flex flex-row justify-center items-center mt-4'>
