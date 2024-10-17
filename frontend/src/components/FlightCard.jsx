@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/FlightCard.css"; // Assuming you have some basic styles
+import "../styles/FlightCard.css";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ export const FlightCard = ({ flight }) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleClick = () => {
-        if (currentUser == null) {
+        if (!currentUser) {
             navigate('/login');
         } else {
             setShowModal(true); // Show the modal
@@ -21,7 +21,7 @@ export const FlightCard = ({ flight }) => {
 
     const handleConfirmBooking = () => {
         setShowModal(false); // Close the modal
-        navigate(`/booking/${flight.flightId}`);
+        navigate(`/booking/${flight.flightId}`); // Use template literal for dynamic route
     };
 
     return (
@@ -42,7 +42,7 @@ export const FlightCard = ({ flight }) => {
             <div className="stops-duration">
                 <div className="duration">02 h 45 m</div>
                 <HiArrowNarrowRight className="w-full size-9" />
-                <div className="stops">{flight.no_of_stops > 0 ? `${flight.no_of_stops} stops` : "Non stop"}</div>
+                <div className="stops">{flight.no_of_stops > 0 ? `${flight.no_of_stops} stops` : "Non-stop"}</div>
             </div>
 
             <div className="flight-time-route">
