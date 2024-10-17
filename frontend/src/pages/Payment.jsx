@@ -1,13 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import '../styles/Payment.css'; // Import your CSS file
+import '../styles/Payment.css'; 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function Payment() {
   const location = useLocation();
   const [flight, setFlight] = useState(null);
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true); 
-  const { flightId, bookingId, passengerDetails } = location.state; // Get passenger details from state
+  const { flightId, bookingId, passengerDetails } = location.state;
+  const ticketRef = useRef();
+
+  const generatePDF = () => {
+    const ticket = ticketRef.current;
+    ticket.classList.add('capture-pdf'); 
+
+    html2canvas(ticket, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('e-ticket.pdf');
+      ticket.classList.remove('capture-pdf');
+    });
+  };
 
   useEffect(() => {
     const fetchFlight = async () => {
@@ -16,14 +38,11 @@ export default function Payment() {
           method: 'GET',
           credentials: 'include',
         });
-        
         const flightData = await res.json();
-        
         if (!res.ok) {
           console.error('Failed to fetch flight data:', flightData.message);
           return;
         }
-
         if (flightData.flights && flightData.flights.length > 0) {
           const selectedFlight = flightData.flights[0];
           setFlight(selectedFlight);
@@ -43,14 +62,11 @@ export default function Payment() {
           method: 'GET',
           credentials: 'include',
         });
-        
         const bookingData = await res.json();
-        
         if (!res.ok) {
           console.error('Failed to fetch booking data:', bookingData.message);
           return;
         }
-
         if (bookingData.bookings && bookingData.bookings.length > 0) {
           const selectedBooking = bookingData.bookings[0]; 
           setBooking(selectedBooking);
@@ -80,7 +96,6 @@ export default function Payment() {
     <div className="payment-container">
       <h2 className="payment-title">Payment Summary</h2>
 
-      {/* Display flight details */}
       <div className="flight-details">
         <h3>Flight Details</h3>
         <p><strong>Flight Number:</strong> {flight.flightId}</p>
@@ -93,8 +108,7 @@ export default function Payment() {
         <p><strong>Price:</strong> ₹{flight.price}</p>
       </div>
 
-      {/* Display passenger details */}
-      <div className="passenger-details">
+      <div className="passenger-details" ref={ticketRef}>
         <h3>Passenger Details</h3>
 <<<<<<< HEAD
         <p><strong>Name:</strong> {booking.f_name} {booking.l_name}</p>
@@ -108,11 +122,12 @@ export default function Payment() {
         <p><strong>Aadhar Number:</strong> {passengerDetails.pass_no}</p>
 >>>>>>> d0c13655d704669d13590a24b836201237060710
       </div>
-      <Link to='/ticket-downloadable'>
-        <button className="payment-button">Proceed to Payment</button>
+
+      
+
+      <Link to={`/final-ticket/${bookingId}/${flightId}`}>
+        <button className="payment-button">Proceed to Final Ticket</button>
       </Link>
     </div>
   );
 }
-
-// Styles...
