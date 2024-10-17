@@ -35,7 +35,7 @@ const Flight = sequelize.define('Flights', {
         allowNull: false,
     },
     date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     route: {
@@ -50,12 +50,17 @@ const Flight = sequelize.define('Flights', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    duration: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     reg_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-    }
+        defaultValue: 27
+    },
+    
 },{
-    timestamps: true,
+    timestamps: false, 
 });
 
 sequelize.sync()

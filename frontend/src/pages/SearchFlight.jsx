@@ -105,7 +105,7 @@ export default function SearchFlight() {
   };
 
   const cities = [
-    'Allahabad', 'Bengaluru', 'Bhopal', 'Bhuj', 'Dehradun',
+    'Allahabad', 'Banglore', 'Bhopal', 'Bhuj', 'Dehradun',
     'Delhi', 'Diu', 'Gorakhpur', 'Guwahati', 'Hyderabad',
     'Jabalpur', 'Jaipur', 'Jammu', 'Kanpur', 'Kochi',
     'Kolkata', 'Kullu', 'Mumbai', 'Patna', 'Pune',

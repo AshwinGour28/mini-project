@@ -27,7 +27,7 @@ export const getFlights = async (req, res, next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
-        const sortDirection = req.query.order === 'asc' ? 'ASC' : 'DESC';
+        const sortDirection = req.query.order === 'asc' ? 'DESC' : 'ASC';
 
         const queryOptions = {
             where: {
@@ -53,19 +53,9 @@ export const getFlights = async (req, res, next) => {
 
         const totalFlights = await Flight.count();
 
-        const now = new Date();
-        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-
-        const lastMonthFlights = await Flight.count({
-            where: {
-                createdAt: { [Op.gte]: oneMonthAgo },
-            },
-        });
-
         res.status(200).json({
             flights,
             totalFlights,
-            lastMonthFlights,
         });
     } catch (error) {
         next(error);
