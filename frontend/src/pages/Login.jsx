@@ -46,7 +46,7 @@ export default function Login() {
   return (
     <div
       className='bg-cover bg-center bg-no-repeat flex justify-center items-center min-h-screen'
-      style={{ backgroundImage: `url("/background.jpg")` }}
+      style={{ backgroundImage: `url("/bg.avif")` }}
     >
       <form
         className='w-[420px] bg-green-500 text-white flex rounded-lg flex-col gap-4 px-[40px] py-[30px] bg-transparent backdrop-blur-[20px]'
