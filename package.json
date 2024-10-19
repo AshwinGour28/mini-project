@@ -21,6 +21,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.2",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
     "moment": "^2.30.1",
