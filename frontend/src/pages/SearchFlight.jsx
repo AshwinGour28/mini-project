@@ -107,7 +107,7 @@ export default function SearchFlight() {
   const cities = [
     'Allahabad', 'Banglore', 'Bhopal', 'Bhuj', 'Dehradun',
     'Delhi', 'Diu', 'Gorakhpur', 'Guwahati', 'Hyderabad',
-    'Jabalpur', 'Jaipur', 'Jammu', 'Kanpur', 'Kochi',
+    'Jabalpur', 'Jaipur', 'Jammu', 'Kanpur', 'Cochin',
     'Kolkata', 'Kullu', 'Mumbai', 'Patna', 'Pune',
     'Raipur', 'Ranchi', 'Shimla', 'Surat', 'Vijayawada',
     'Tezpur', 'Tirupati',

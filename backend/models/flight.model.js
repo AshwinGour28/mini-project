@@ -56,7 +56,7 @@ const Flight = sequelize.define('Flights', {
     },
     reg_id: {
         type: DataTypes.INTEGER,
-        defaultValue: 27
+        defaultValue: 3
     },
     
 },{
