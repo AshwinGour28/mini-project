@@ -40,7 +40,7 @@ export const FlightCard = ({ flight }) => {
 
             {/* Stops and duration */}
             <div className="stops-duration">
-                <div className="duration">02 h 45 m</div>
+                <div className="duration">{flight.duration}</div>
                 <HiArrowNarrowRight className="w-full size-9" />
                 <div className="stops">{flight.no_of_stops > 0 ? `${flight.no_of_stops} stops` : "Non-stop"}</div>
             </div>

@@ -1,6 +1,6 @@
 import Flight from "../models/flight.model.js";
 import { errorHandler } from "../utils/error.js"
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 
 
 export const addFlight = async (req, res, next) => {
@@ -51,11 +51,44 @@ export const getFlights = async (req, res, next) => {
 
         const flights = await Flight.findAll(queryOptions);
 
+        
         const totalFlights = await Flight.count();
+        
+        const flightsByAirline = await Flight.findAll({
+            attributes: ['airline', [Sequelize.fn('COUNT', Sequelize.col('airline')), 'totalFlights']],
+            group: ['airline'],
+        });
+
+        const revenueByAirline = await Flight.findAll({
+            attributes: ['airline', [Sequelize.fn('SUM', Sequelize.col('price')), 'totalRevenue']],
+            group: ['airline'],
+        });
+
+        const averagePriceResult = await Flight.findOne({
+            attributes: [[Sequelize.fn('AVG', Sequelize.col('price')), 'avgPrice']],
+        });
+    
+        const averagePrice = averagePriceResult ? parseFloat(averagePriceResult.dataValues.avgPrice) : null;
+
+        function formatNumber(num) {
+            if (num >= 1e6) {
+                return (num / 1e6).toFixed(2) + 'M';
+            } else if (num >= 1e3) {
+                return (num / 1e3).toFixed(2) + 'K';
+            } else {
+                return num.toFixed(2);
+            }
+        }
+
+        const formattedAveragePrice = averagePrice !== null ? formatNumber(averagePrice) : null;
+        
 
         res.status(200).json({
             flights,
             totalFlights,
+            flightsByAirline,
+            revenueByAirline,
+            averagePrice:formattedAveragePrice,
         });
     } catch (error) {
         next(error);
